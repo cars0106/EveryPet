@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "363933111214",
+    "firebase_url": "https://everypet-d136e.firebaseio.com",
+    "project_id": "everypet-d136e",
+    "storage_bucket": "everypet-d136e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363933111214:android:ebefccb51bb7bfda4f6e3f",
+        "android_client_info": {
+          "package_name": "com.everypet.everypet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "363933111214-9lvvkq2agp67t1bn7fncc8t06hd1b8gf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1rFGYgc1oWJe3y3p4PAIIsUr3o-o2NVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "363933111214-9lvvkq2agp67t1bn7fncc8t06hd1b8gf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
