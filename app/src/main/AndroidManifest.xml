@@ -20,7 +20,11 @@
         <activity android:name=".MemoAdderActivity" />
         <activity android:name=".MemoActivity" />
         <activity android:name=".ToDoAdderActivity" />
-        <activity android:name=".ToDoActivity" />
+        <activity android:name=".ToDoActivity">
+            <intent-filter>
+                <action android:name=".LoginMainActivity" />
+            </intent-filter>
+        </activity>
         <activity android:name=".LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
