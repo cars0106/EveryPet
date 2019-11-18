@@ -3,22 +3,27 @@
 
     <item
         android:id="@+id/todo"
-        android:title="할일" />
+        android:title="할일"
+        android:checked="false" />
 
     <item
         android:id="@+id/memo"
-        android:title="메모" />
+        android:title="메모"
+        android:checked="false" />
 
     <item
         android:id="@+id/diary"
-        android:title="일기" />
+        android:title="일기"
+        android:checked="false" />
 
     <item
         android:id="@+id/community"
-        android:title="자랑하기" />
+        android:title="자랑하기"
+        android:checked="false" />
 
     <item
         android:id="@+id/profile"
-        android:title="프로필" />
+        android:title="프로필"
+        android:checked="false" />
 
 </menu>
