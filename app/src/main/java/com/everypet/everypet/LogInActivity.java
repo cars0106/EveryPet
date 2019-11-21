@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.everypet.everypet.font.BaseActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class LogInActivity extends AppCompatActivity implements View.OnClickListener {
+public class LogInActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "LogInActivity";
     private static final int RC_SIGN_IN = 1;

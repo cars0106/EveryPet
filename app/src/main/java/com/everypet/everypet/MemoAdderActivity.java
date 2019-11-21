@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MemoAdderActivity extends AppCompatActivity {
+import com.everypet.everypet.font.BaseActivity;
+
+public class MemoAdderActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

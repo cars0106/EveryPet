@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class ProfileAdderWriteActivity extends AppCompatActivity {
+import com.everypet.everypet.font.BaseActivity;
+
+public class ProfileAdderWriteActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

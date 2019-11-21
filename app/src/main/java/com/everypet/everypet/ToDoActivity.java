@@ -10,10 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ToDoActivity extends AppCompatActivity implements View.OnClickListener {
+public class ToDoActivity extends BaseActivity implements View.OnClickListener {
 
     private Button button_sign_out;
     private FirebaseAuth firebaseAuth;

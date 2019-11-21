@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class DiaryAdderActivity extends AppCompatActivity {
+import com.everypet.everypet.font.BaseActivity;
+
+public class DiaryAdderActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

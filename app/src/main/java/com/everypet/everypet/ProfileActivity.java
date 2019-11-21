@@ -8,9 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
