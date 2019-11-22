@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="일기"
+            android:textColor="#FF9800"
             android:textSize="30dp" />
 
         <HorizontalScrollView
