@@ -4,26 +4,31 @@
     <item
         android:id="@+id/todo"
         android:title="할일"
+        android:icon="@drawable/ic_check"
         android:checked="false" />
 
     <item
         android:id="@+id/memo"
         android:title="메모"
+        android:icon="@drawable/ic_memo"
         android:checked="false" />
 
     <item
         android:id="@+id/diary"
         android:title="일기"
+        android:icon="@drawable/ic_diary"
         android:checked="false" />
 
     <item
         android:id="@+id/community"
         android:title="자랑하기"
+        android:icon="@drawable/ic_community"
         android:checked="false" />
 
     <item
         android:id="@+id/profile"
         android:title="프로필"
+        android:icon="@drawable/ic_profile"
         android:checked="false" />
 
 </menu>
