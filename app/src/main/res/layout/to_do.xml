@@ -8,27 +8,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp" >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="할 일"
+                android:text="할일"
                 android:textColor="#FF9800"
-                android:textSize="25dp" />
+                android:textSize="30dp" />
 
-            <Button
-                android:id="@+id/plus_toDo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="+" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-        </RelativeLayout>
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_plus"
+                android:background="#FFFFFF"/>
+
+        </LinearLayout>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -52,6 +58,7 @@
                         android:layout_weight="0"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
+                        android:background="#FFFFFF"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
@@ -61,9 +68,11 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0"
                         android:text="전체" />
+
                 </LinearLayout>
 
             </LinearLayout>
+
         </HorizontalScrollView>
 
         <ScrollView
