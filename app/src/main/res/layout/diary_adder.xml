@@ -35,13 +35,14 @@
                     android:layout_weight="0"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/imageButton"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_weight="0"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
+                        android:background="#FFFFFF"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
