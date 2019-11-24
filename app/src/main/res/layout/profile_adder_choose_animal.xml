@@ -9,8 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="191dp"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,13 +43,17 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/prf_cat"
                         android:layout_width="70dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="70dp"
+                        android:clickable="true"
+                        android:onClick="onClickKind"
+                        app:srcCompat="@drawable/cat" />
 
                     <TextView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="고양이" />
 
                 </LinearLayout>
@@ -56,13 +65,17 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/prf_dog"
                         android:layout_width="70dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="70dp"
+                        android:clickable="true"
+                        android:onClick="onClickKind"
+                        app:srcCompat="@drawable/dog" />
 
                     <TextView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="강아지" />
 
                 </LinearLayout>
@@ -74,13 +87,17 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/prf_fish"
                         android:layout_width="70dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="70dp"
+                        android:clickable="true"
+                        android:onClick="onClickKind"
+                        app:srcCompat="@drawable/fish" />
 
                     <TextView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="물고기" />
 
                 </LinearLayout>
@@ -99,13 +116,17 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/prf_rabbit"
                         android:layout_width="70dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="70dp"
+                        android:clickable="true"
+                        android:onClick="onClickKind"
+                        app:srcCompat="@drawable/rabbit" />
 
                     <TextView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="토끼" />
 
                 </LinearLayout>
@@ -117,13 +138,17 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/prf_snake"
                         android:layout_width="70dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="70dp"
+                        android:clickable="true"
+                        android:onClick="onClickKind"
+                        app:srcCompat="@drawable/snake" />
 
                     <TextView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="파충류" />
 
                 </LinearLayout>
@@ -135,13 +160,17 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/prf_rat"
                         android:layout_width="70dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="70dp"
+                        android:clickable="true"
+                        android:onClick="onClickKind"
+                        app:srcCompat="@drawable/rat" />
 
                     <TextView
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="설치류" />
 
                 </LinearLayout>
@@ -149,10 +178,13 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/prf_etc"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
+                android:clickable="true"
+                android:onClick="onClickKind"
                 android:src="@drawable/person" />
 
             <TextView

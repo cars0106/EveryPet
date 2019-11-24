@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".font.BaseActivity"></activity>
         <activity android:name=".ProfileAdderWriteActivity" />
-        <activity android:name=".ProfileAdderChooseAnimalActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileAdderChooseAnimalActivity"/>
+        <activity android:name=".ProfileActivity"/>
         <activity android:name=".CommunityAdderWriteActivity" />
         <activity android:name=".CommunityAdderChooseAnimalActivity" />
         <activity android:name=".CommunityActivity" />
