@@ -34,7 +34,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="#FFFFFF"
-                android:onClick="onClickPlus"
+                android:onClick="onPlusBtn"
                 android:src="@drawable/ic_plus" />
 
         </LinearLayout>
@@ -55,17 +55,17 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/imageButton"
+                        android:id="@+id/prf_pic"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_weight="0"
                         android:adjustViewBounds="true"
-                        android:scaleType="centerInside"
                         android:background="#FFFFFF"
+                        android:scaleType="centerInside"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/prf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -85,7 +85,154 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="이름 : " />
+
+                            <EditText
+                                android:id="@+id/prf_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='이름' />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="생일 :  " />
+
+                            <EditText
+                                android:id="@+id/prf_bday"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='생일' />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="성별 : " />
+
+                            <EditText
+                                android:id="@+id/prf_gender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='성별' />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="체중 : " />
+
+                            <EditText
+                                android:id="@+id/prf_weight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='체중' />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="신장 : " />
+
+                            <EditText
+                                android:id="@+id/prf_height"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='신장' />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="질병내역 : " />
+
+                            <EditText
+                                android:id="@+id/prf_symptom"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='질병내역' />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="조심해야 할 것 : " />
+
+                            <EditText
+                                android:id="@+id/prf_careful"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
 
         </ScrollView>
 

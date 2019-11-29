@@ -16,7 +16,7 @@ import com.everypet.everypet.font.BaseActivity;
 import java.io.ByteArrayOutputStream;
 
 public class ProfileAdderChooseAnimalActivity extends BaseActivity {
-    ImageView kindImg = new ImageView(this);
+    ImageView kindImg;
     String kindStr;
 
     @Override
@@ -27,7 +27,7 @@ public class ProfileAdderChooseAnimalActivity extends BaseActivity {
 
     public void onClickKind(View v) {
 
-        //버튼 아이디로 종류에 맞는 사진으로 세팅해야함 => ProfileAdderChooseAnimalActivity로 사진, 해당 종류 정보 전달 후 화면전환
+        //버튼 아이디로 종류에 맞는 사진으로 세팅해야함 => ProfileAdderChooseAnimalActivity로 해당 종류 정보 전달 후 화면전환
 
         switch (v.getId()) {
             case (R.id.prf_cat): {
@@ -67,19 +67,11 @@ public class ProfileAdderChooseAnimalActivity extends BaseActivity {
             }
         }
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        Bitmap bitmap = ((BitmapDrawable)kindImg.getDrawable()).getBitmap();
-        float scale = (float)(1024/(float)bitmap.getWidth());
-        int image_w = (int)(bitmap.getWidth()*scale);
-        int image_h = (int)(bitmap.getHeight()*scale);
-        Bitmap resize = Bitmap.createScaledBitmap(bitmap, image_w,image_h, true);
-        resize.compress(Bitmap.CompressFormat.JPEG,100,stream);
-        byte[]byteArray = stream.toByteArray();
 
         Intent intent = new Intent(this,ProfileAdderWriteActivity.class);
-        intent.putExtra("image", byteArray);
         intent.putExtra("string", kindStr);
 
-        startActivity(intent);
+        startActivityForResult(intent,124);
+        finish();
     }
 }

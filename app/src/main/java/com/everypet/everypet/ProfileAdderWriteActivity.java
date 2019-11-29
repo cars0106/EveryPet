@@ -10,16 +10,27 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.everypet.everypet.font.BaseActivity;
 
+import org.w3c.dom.Text;
+
 public class ProfileAdderWriteActivity extends BaseActivity {
 
-    Button saveNew = new Button(this);
-    ImageView kindImg = new ImageView(this);
-    TextView kindName = new TextView(this);
+    Button saveNew;
+    ImageView kindImg;
+    TextView kindName;
+
+    EditText name;
+    EditText bday;
+    EditText gender;
+    EditText weight;
+    EditText height;
+    EditText symptom;
+    EditText careful;
 
     SharedPreferences sp;
     @Override
@@ -29,14 +40,43 @@ public class ProfileAdderWriteActivity extends BaseActivity {
 
         kindImg= findViewById(R.id.prf_kindImg);
         kindName= findViewById(R.id.prf_kindStr);
+        name = findViewById(R.id.prf_name);
+        bday=findViewById(R.id.prf_bday);
+        gender=findViewById(R.id.prf_gender);
+        weight=findViewById(R.id.prf_weight);
+        height=findViewById(R.id.prf_height);
+        symptom=findViewById(R.id.prf_symptom);
+        careful=findViewById(R.id.prf_careful);
 
-        Bundle extras=getIntent().getExtras();
-        String s= extras.getString("string");
-        byte[] byteArray = getIntent().getByteArrayExtra("image");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
+
+        //Bundle extras=getIntent().getExtras();
+        final Intent intent= getIntent();
+        String s= intent.getStringExtra("string");
         kindName.setText(s);
-        kindImg.setImageBitmap(bitmap);
+        switch (s){
+            case("고양이"):
+                kindImg.setImageResource(R.drawable.cat);
+                break;
+            case("강아지"):
+                kindImg.setImageResource(R.drawable.dog);
+                break;
+            case("물고기"):
+                kindImg.setImageResource(R.drawable.fish);
+                break;
+            case("토끼"):
+                kindImg.setImageResource(R.drawable.rabbit);
+                break;
+            case("파충류"):
+                kindImg.setImageResource(R.drawable.snake);
+                break;
+            case("설치류"):
+                kindImg.setImageResource(R.drawable.rat);
+                break;
+            case("기타"):
+                kindImg.setImageResource(R.drawable.person);
+                break;
 
+        }
         sp=getSharedPreferences("profile", MODE_PRIVATE);
         saveNew = findViewById(R.id.save_newPet);
 
@@ -45,21 +85,26 @@ public class ProfileAdderWriteActivity extends BaseActivity {
             public void onClick(View v){
                 // 저장하기 버튼누르면 db에 프로필 정보가 저장되어야함
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putString("종류", String.valueOf(R.id.prf_kindStr));
-                editor.putString("이름", String.valueOf(R.id.prf_name));
-                editor.putString("생일", String.valueOf(R.id.prf_name));
-                editor.putString("성별", String.valueOf(R.id.prf_name));
-                editor.putString("체중", String.valueOf(R.id.prf_name));
-                editor.putString("신장", String.valueOf(R.id.prf_name));
-                editor.putString("질병", String.valueOf(R.id.prf_name));
-                editor.putString("조심", String.valueOf(R.id.prf_name));
+                editor.putString("종류", kindName.getText().toString());
+                System.out.println(kindName.getText().toString());
+                editor.putString("이름", name.getText().toString());
+                System.out.println(name.getText().toString());
+                editor.putString("생일", bday.getText().toString());
+                System.out.println(bday.getText().toString());
+                editor.putString("성별", gender.getText().toString());
+                System.out.println(gender.getText().toString());
+                editor.putString("체중", weight.getText().toString());
+                System.out.println(weight.getText().toString());
+                editor.putString("신장", height.getText().toString());
+                System.out.println(height.getText().toString());
+                editor.putString("질병", symptom.getText().toString());
+                System.out.println(symptom.getText().toString());
+                editor.putString("조심", careful.getText().toString());
+                System.out.println(careful.getText().toString());
                 editor.commit();
 
-                //값 저장뒤에 ProfileActivity로 넘어가야함
-                Intent intent = new Intent();
-                ComponentName write2Profile = new ComponentName("this","this.ProfileActivity");
-                intent.setComponent(write2Profile);
-                startActivity(intent);
+                setResult(RESULT_OK);
+                finish();
             }
         });
     }

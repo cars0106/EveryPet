@@ -9,10 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
         android:orientation="vertical"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -70,7 +68,8 @@
                         android:id="@+id/prf_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint='이름' />
+                        android:hint='이름'
+                        android:inputType="textPersonName" />
 
                 </LinearLayout>
 
@@ -87,7 +86,8 @@
                         android:id="@+id/prf_bday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint='생일' />
+                        android:hint='생일'
+                        android:inputType="date" />
 
                 </LinearLayout>
 
@@ -104,7 +104,8 @@
                         android:id="@+id/prf_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint='성별' />
+                        android:hint='성별'
+                        android:inputType="textShortMessage" />
 
                 </LinearLayout>
 
@@ -121,7 +122,8 @@
                         android:id="@+id/prf_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint='체중' />
+                        android:hint='체중'
+                        android:inputType="textShortMessage" />
 
                 </LinearLayout>
 
@@ -138,7 +140,8 @@
                         android:id="@+id/prf_height"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint='신장' />
+                        android:hint='신장'
+                        android:inputType="textShortMessage" />
 
                 </LinearLayout>
 
@@ -155,7 +158,8 @@
                         android:id="@+id/prf_symptom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint='질병내역' />
+                        android:hint='질병내역'
+                        android:inputType="text" />
 
                 </LinearLayout>
 
@@ -171,7 +175,8 @@
                     <EditText
                         android:id="@+id/prf_careful"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
 
                 </LinearLayout>
 

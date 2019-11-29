@@ -66,7 +66,7 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data); //여기서 안잡힘
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
@@ -76,7 +76,7 @@ public class LogInActivity extends BaseActivity implements View.OnClickListener 
                 finish();
             }
             catch (ApiException e) {
-                Log.w(TAG, "Google sign in failed", e);
+                Log.w(TAG, "Google sign in failed", e); //sign in이 안돼서 이쪽으로 넘어왔다고 하심
             }
         }
     }
