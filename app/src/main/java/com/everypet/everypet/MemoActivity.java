@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,6 +48,15 @@ public class MemoActivity extends BaseActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        ImageButton addButton = findViewById(R.id.button_add_memo);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MemoAdderActivity.class);
+                startActivity(intent);
             }
         });
     }

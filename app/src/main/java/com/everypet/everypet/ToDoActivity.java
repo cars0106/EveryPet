@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -55,6 +56,15 @@ public class ToDoActivity extends BaseActivity implements View.OnClickListener {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        ImageButton addButton = findViewById(R.id.button_add_to_do);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ToDoAdderActivity.class);
+                startActivity(intent);
             }
         });
     }
