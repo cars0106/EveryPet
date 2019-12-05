@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -93,18 +95,22 @@ public class ProfileActivity extends BaseActivity {
                     case R.id.todo:
                         Intent todoIntent = new Intent(getApplicationContext(), ToDoActivity.class);
                         startActivityForResult(todoIntent, 100);
+                        finish();
                         return true;
                     case R.id.memo:
                         Intent memoIntent = new Intent(getApplicationContext(), MemoActivity.class);
                         startActivityForResult(memoIntent, 100);
+                        finish();
                         return true;
                     case R.id.diary:
                         Intent diaryIntent = new Intent(getApplicationContext(), DiaryActivity.class);
                         startActivityForResult(diaryIntent, 100);
+                        finish();
                         return true;
                     case R.id.community:
                         Intent communityIntent = new Intent(getApplicationContext(), CommunityActivity.class);
                         startActivityForResult(communityIntent, 100);
+                        finish();
                         return true;
                     case R.id.profile:
                         return true;
@@ -132,9 +138,17 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Closing App")
+                .setMessage("Are you sure you want to close this app?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }
