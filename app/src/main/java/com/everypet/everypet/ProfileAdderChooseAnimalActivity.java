@@ -2,6 +2,8 @@ package com.everypet.everypet;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -73,5 +75,21 @@ public class ProfileAdderChooseAnimalActivity extends BaseActivity {
 
         startActivityForResult(intent,124);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("저장하지 않고 종료")
+                .setMessage("게시물을 만들지 않고 종료하시겠습니까?")
+                .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("아니오", null)
+                .show();
     }
 }
