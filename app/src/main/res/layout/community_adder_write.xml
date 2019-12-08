@@ -52,6 +52,12 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp" />
 
+            <Button
+                android:id="@+id/add_image_community_adder_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사진 넣기" />
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
