@@ -18,7 +18,6 @@ import com.everypet.everypet.font.BaseActivity;
 import java.io.ByteArrayOutputStream;
 
 public class ProfileAdderChooseAnimalActivity extends BaseActivity {
-    ImageView kindImg;
     String kindStr;
 
     @Override
@@ -30,40 +29,32 @@ public class ProfileAdderChooseAnimalActivity extends BaseActivity {
     public void onClickKind(View v) {
 
         //버튼 아이디로 종류에 맞는 사진으로 세팅해야함 => ProfileAdderChooseAnimalActivity로 해당 종류 정보 전달 후 화면전환
-
         switch (v.getId()) {
             case (R.id.prf_cat): {
-                kindImg = findViewById(R.id.prf_cat);
                 kindStr = "고양이";
                 break;
             }
             case (R.id.prf_dog): {
-                kindImg = findViewById(R.id.prf_dog);
                 kindStr = "강아지";
                 break;
             }
             case (R.id.prf_fish): {
-                kindImg = findViewById(R.id.prf_fish);
                 kindStr = "물고기";
                 break;
             }
             case (R.id.prf_rabbit): {
-                kindImg = findViewById(R.id.prf_rabbit);
                 kindStr = "토끼";
                 break;
             }
             case (R.id.prf_snake): {
-                kindImg = findViewById(R.id.prf_snake);
                 kindStr = "파충류";
                 break;
             }
             case (R.id.prf_rat): {
-                kindImg = findViewById(R.id.prf_rat);
                 kindStr = "설치류";
                 break;
             }
             case (R.id.prf_etc): {
-                kindImg = findViewById(R.id.prf_etc);
                 kindStr = "기타";
                 break;
             }

@@ -24,6 +24,22 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="prf_pic">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="prf">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_weight">0</item>
+    </style>
+
     <!-- Bottom Navigation의 Icon과 Title의 사이를 조정하기 위해 사용-->
     <dimen name="design_bottom_navigation_height" tools:override="true">52dp</dimen>
 

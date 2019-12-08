@@ -7,6 +7,7 @@
     tools:context=".ProfileAdderWriteActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -44,110 +45,141 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="0dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="이름 : " />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/prf_name"
-                        android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="이름 : " />
+
+                            <EditText
+                                android:id="@+id/prf_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='이름'
+                                android:inputType="textPersonName" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="생일 : " />
+
+                            <EditText
+                                android:id="@+id/prf_bday"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='생일'
+                                android:inputType="textShortMessage|numberSigned" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="성별 : " />
+
+                            <EditText
+                                android:id="@+id/prf_gender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='성별'
+                                android:inputType="textShortMessage" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="체중 : " />
+
+                            <EditText
+                                android:id="@+id/prf_weight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='체중'
+                                android:inputType="textShortMessage|numberSigned" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="신장 : " />
+
+                            <EditText
+                                android:id="@+id/prf_height"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint='신장'
+                                android:inputType="textShortMessage|numberSigned" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint='이름'
-                        android:inputType="textPersonName" />
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="생일 :  " />
-
-                    <EditText
-                        android:id="@+id/prf_bday"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint='생일'
-                        android:inputType="date" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="성별 : " />
-
-                    <EditText
-                        android:id="@+id/prf_gender"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint='성별'
-                        android:inputType="textShortMessage" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="체중 : " />
-
-                    <EditText
-                        android:id="@+id/prf_weight"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint='체중'
-                        android:inputType="textShortMessage" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="신장 : " />
-
-                    <EditText
-                        android:id="@+id/prf_height"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint='신장'
-                        android:inputType="textShortMessage" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -159,59 +191,52 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint='질병내역'
-                        android:inputType="text" />
+                        android:inputType="textLongMessage" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="조심해야 할 것 : " />
+                        android:text="주의사항 : " />
 
                     <EditText
                         android:id="@+id/prf_careful"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text" />
+                        android:hint="주의사항"
+                        android:inputType="textLongMessage" />
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/prf_newPic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="사진 추가하기" />
-
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/save_newPet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="저장하기" />
+        </ScrollView>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/save_newPet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onClick"
+        android:text="저장하기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -229,6 +254,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
 
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/menu_bottom_navigation_view" />
+        app:menu="@menu/menu_bottom_navigation_view" >
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
