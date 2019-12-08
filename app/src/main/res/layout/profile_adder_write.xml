@@ -82,7 +82,8 @@
                                 android:id="@+id/prf_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint='이름' />
+                                android:hint='이름'
+                                android:inputType="textPersonName" />
 
                         </LinearLayout>
 
@@ -99,7 +100,8 @@
                                 android:id="@+id/prf_bday"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint='생일' />
+                                android:hint='생일'
+                                android:inputType="textShortMessage|numberSigned" />
 
                         </LinearLayout>
 
@@ -116,7 +118,8 @@
                                 android:id="@+id/prf_gender"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint='성별' />
+                                android:hint='성별'
+                                android:inputType="textShortMessage" />
 
                         </LinearLayout>
 
@@ -133,7 +136,8 @@
                                 android:id="@+id/prf_weight"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint='체중' />
+                                android:hint='체중'
+                                android:inputType="textShortMessage|numberSigned" />
 
                         </LinearLayout>
 
@@ -150,7 +154,8 @@
                                 android:id="@+id/prf_height"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint='신장' />
+                                android:hint='신장'
+                                android:inputType="textShortMessage|numberSigned" />
 
                         </LinearLayout>
 
@@ -185,7 +190,8 @@
                         android:id="@+id/prf_symptom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint='질병내역' />
+                        android:hint='질병내역'
+                        android:inputType="textLongMessage" />
 
                 </LinearLayout>
 
@@ -204,7 +210,8 @@
                         android:id="@+id/prf_careful"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="주의사항" />
+                        android:hint="주의사항"
+                        android:inputType="textLongMessage" />
 
                 </LinearLayout>
 

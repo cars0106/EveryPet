@@ -32,9 +32,7 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends BaseActivity {
 
-    LinearLayout prfBtnSets;
     ImageButton pet1Kind;
-    TextView pet1Name;
     EditText name;
     EditText bday;
     EditText gender;
@@ -44,15 +42,24 @@ public class ProfileActivity extends BaseActivity {
     EditText careful;
     long count;
 
-    LayoutInflater layoutInflater;
-    LinearLayout linearLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
         setProfile();
+
+        DBHelper helper = new DBHelper(this);
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select name, kind, birthDay, gender, weight, height, symptom, careful from tb_pet order by _id asc limit 1", null);
+        if(cursor != null)  count = DatabaseUtils.queryNumEntries(db,"tb_pet");
+
+        int resourceId;
+
+        for (int i=2; i<=count; i++){
+            resourceId = getResources().getIdentifier("profile"+i, "id",getPackageName());
+            (findViewById(resourceId)).setVisibility(View.VISIBLE);
+        }
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -106,24 +113,15 @@ public class ProfileActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Closing App")
-                .setMessage("Are you sure you want to close this app?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
-
-    @Override
     protected void onRestart() {
         setProfile();
+
+        int resourceId;
+        for (int i=2; i<=count; i++){
+            resourceId = getResources().getIdentifier("profile"+i, "id",getPackageName());
+            (findViewById(resourceId)).setVisibility(View.VISIBLE);
+        }
+
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.getMenu().getItem(4).setChecked(true);
@@ -159,13 +157,40 @@ public class ProfileActivity extends BaseActivity {
         });
         super.onRestart();
     }
+//     하려고 했던 것: 현재 액티비티에서 동물들 탭버튼 누르면 그 동물에 맞는 프로필 띄우기
+//    public void onClickPrf(View v){
+//        switch(v.getId()){
+//            case (R.id.prf_pic1):
+//                setProfile(1);
+//                break;
+//            case (R.id.prf_pic2):
+//                setProfile(2);
+//                break;
+//            case (R.id.prf_pic3):
+//                setProfile(3);
+//                break;
+//            case (R.id.prf_pic4):
+//                setProfile(4);
+//                break;
+//            case (R.id.prf_pic5):
+//                setProfile(5);
+//                break;
+//            case (R.id.prf_pic6):
+//                setProfile(6);
+//                break;
+//            case (R.id.prf_pic7):
+//                setProfile(7);
+//                break;
+//            case (R.id.prf_pic8):
+//                setProfile(8);
+//                break;
+//        }
+//    }
 
     public void setProfile(){
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        pet1Kind = findViewById(R.id.prf_pic);
-        pet1Name = findViewById(R.id.prf);
         name = findViewById(R.id.prf_name);
         bday = findViewById(R.id.prf_bday);
         gender = findViewById(R.id.prf_gender);
@@ -182,8 +207,8 @@ public class ProfileActivity extends BaseActivity {
         }System.out.println("/////////////count값은\t"+count);
         if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
+            //for(int i=1;i<count;i++) cursor.moveToNext(); 이 부분에서 자꾸 이상한 곳 가리키는 듯
             name.setText(cursor.getString(0));
-            pet1Name.setText(cursor.getString(0));
             kind = cursor.getString(1);
             bday.setText(cursor.getString(2));
             gender.setText(cursor.getString(3));
@@ -192,30 +217,22 @@ public class ProfileActivity extends BaseActivity {
             symptom.setText(cursor.getString(6));
             careful.setText(cursor.getString(7));
             db.close();
-
-            switch (kind) {
-                case ("고양이"):
-                    pet1Kind.setImageResource(R.drawable.cat);
-                    break;
-                case ("강아지"):
-                    pet1Kind.setImageResource(R.drawable.dog);
-                    break;
-                case ("물고기"):
-                    pet1Kind.setImageResource(R.drawable.fish);
-                    break;
-                case ("토끼"):
-                    pet1Kind.setImageResource(R.drawable.rabbit);
-                    break;
-                case ("파충류"):
-                    pet1Kind.setImageResource(R.drawable.snake);
-                    break;
-                case ("설치류"):
-                    pet1Kind.setImageResource(R.drawable.rat);
-                    break;
-                case ("기타"):
-                    pet1Kind.setImageResource(R.drawable.person);
-                    break;
-            }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Closing App")
+                .setMessage("Are you sure you want to close this app?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }
