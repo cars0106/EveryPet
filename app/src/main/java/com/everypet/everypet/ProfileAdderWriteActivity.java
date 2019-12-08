@@ -122,6 +122,7 @@ public class ProfileAdderWriteActivity extends BaseActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .setNegativeButton("아니오", null)

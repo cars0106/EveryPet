@@ -1,15 +1,18 @@
 package com.everypet.everypet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.everypet.everypet.font.BaseActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class CommunityAdderChooseAnimalActivity extends BaseActivity implements View.OnClickListener {
 
@@ -40,33 +43,40 @@ public class CommunityAdderChooseAnimalActivity extends BaseActivity implements 
 
         switch (view.getId()) {
             case R.id.comu_cat :
-                intent.putExtra("Kind", "cat");
+                intent.putExtra("Type", "cat");
                 startActivity(intent);
                 finish();
+                break;
             case R.id.comu_dog :
-                intent.putExtra("Kind", "dog");
+                intent.putExtra("Type", "dog");
                 startActivity(intent);
                 finish();
+                break;
             case R.id.comu_fish :
-                intent.putExtra("Kind", "fish");
+                intent.putExtra("Type", "fish");
                 startActivity(intent);
                 finish();
+                break;
             case R.id.comu_rabbit :
-                intent.putExtra("Kind", "rabbit");
+                intent.putExtra("Type", "rabbit");
                 startActivity(intent);
                 finish();
+                break;
             case R.id.comu_snake :
-                intent.putExtra("Kind", "snake");
+                intent.putExtra("Type", "snake");
                 startActivity(intent);
                 finish();
+                break;
             case R.id.comu_rat :
-                intent.putExtra("Kind", "rat");
+                intent.putExtra("Type", "rat");
                 startActivity(intent);
                 finish();
+                break;
             case R.id.comu_etc :
-                intent.putExtra("Kind", "etc");
+                intent.putExtra("Type", "etc");
                 startActivity(intent);
                 finish();
+                break;
         }
     }
 
