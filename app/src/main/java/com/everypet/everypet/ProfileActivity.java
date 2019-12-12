@@ -15,6 +15,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,12 +28,12 @@ import android.widget.TextView;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ProfileActivity extends BaseActivity {
-
-    ImageButton pet1Kind;
     EditText name;
     EditText bday;
     EditText gender;
@@ -47,12 +48,14 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
 
-        setProfile();
+        setBtnImg();
+        setProfile(1);
 
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select name, kind, birthDay, gender, weight, height, symptom, careful from tb_pet order by _id asc limit 1", null);
+        Cursor cursor = db.rawQuery("select name, kind, birthDay, gender, weight, height, symptom, careful from tb_pet order by _id asc", null);
         if(cursor != null)  count = DatabaseUtils.queryNumEntries(db,"tb_pet");
+        db.close();
 
         int resourceId;
 
@@ -114,7 +117,8 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     protected void onRestart() {
-        setProfile();
+        setBtnImg();
+        setProfile((int)count);
 
         int resourceId;
         for (int i=2; i<=count; i++){
@@ -158,36 +162,36 @@ public class ProfileActivity extends BaseActivity {
         super.onRestart();
     }
 //     하려고 했던 것: 현재 액티비티에서 동물들 탭버튼 누르면 그 동물에 맞는 프로필 띄우기
-//    public void onClickPrf(View v){
-//        switch(v.getId()){
-//            case (R.id.prf_pic1):
-//                setProfile(1);
-//                break;
-//            case (R.id.prf_pic2):
-//                setProfile(2);
-//                break;
-//            case (R.id.prf_pic3):
-//                setProfile(3);
-//                break;
-//            case (R.id.prf_pic4):
-//                setProfile(4);
-//                break;
-//            case (R.id.prf_pic5):
-//                setProfile(5);
-//                break;
-//            case (R.id.prf_pic6):
-//                setProfile(6);
-//                break;
-//            case (R.id.prf_pic7):
-//                setProfile(7);
-//                break;
-//            case (R.id.prf_pic8):
-//                setProfile(8);
-//                break;
-//        }
-//    }
+    public void onClickPrf(View v){
+        switch(v.getId()){
+            case (R.id.prf_pic1):
+                setProfile(1);
+                break;
+            case (R.id.prf_pic2):
+                setProfile(2);
+                break;
+            case (R.id.prf_pic3):
+                setProfile(3);
+                break;
+            case (R.id.prf_pic4):
+                setProfile(4);
+                break;
+            case (R.id.prf_pic5):
+                setProfile(5);
+                break;
+            case (R.id.prf_pic6):
+                setProfile(6);
+                break;
+            case (R.id.prf_pic7):
+                setProfile(7);
+                break;
+            case (R.id.prf_pic8):
+                setProfile(8);
+                break;
+        }
+    }
 
-    public void setProfile(){
+    public void setProfile(int num){
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -199,24 +203,65 @@ public class ProfileActivity extends BaseActivity {
         symptom = findViewById(R.id.prf_symptom);
         careful = findViewById(R.id.prf_careful);
 
-        String kind;
-
-        Cursor cursor = db.rawQuery("select name, kind, birthDay, gender, weight, height, symptom, careful from tb_pet order by _id asc limit 1", null);
-        if(cursor != null) {
-            count = DatabaseUtils.queryNumEntries(db,"tb_pet");
-        }System.out.println("/////////////count값은\t"+count);
+        Cursor cursor = db.rawQuery("SELECT * FROM tb_pet order by _id asc", null);
+//        if(cursor != null) {
+//            count = DatabaseUtils.queryNumEntries(db,"tb_pet");//db에 있는 데이터 개수
+//        }System.out.println("/////////////count값은\t"+count);
         if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
-            //for(int i=1;i<count;i++) cursor.moveToNext(); 이 부분에서 자꾸 이상한 곳 가리키는 듯
-            name.setText(cursor.getString(0));
-            kind = cursor.getString(1);
-            bday.setText(cursor.getString(2));
-            gender.setText(cursor.getString(3));
-            weight.setText(cursor.getString(4));
-            height.setText(cursor.getString(5));
-            symptom.setText(cursor.getString(6));
-            careful.setText(cursor.getString(7));
-            db.close();
+            for(int i=1;i<num;i++) cursor.moveToNext(); //이 부분에서 자꾸 이상한 곳 가리키는 듯
+            name.setText(cursor.getString(1));
+            bday.setText(cursor.getString(3));
+            gender.setText(cursor.getString(4));
+            weight.setText(cursor.getString(5));
+            height.setText(cursor.getString(6));
+            symptom.setText(cursor.getString(7));
+            careful.setText(cursor.getString(8));
+        }
+        db.close();
+    }
+
+    public void setBtnImg(){
+        int btnId;
+        int btnText;
+        DBHelper helper = new DBHelper(this);
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM tb_pet order by _id asc", null);
+        if(cursor != null && cursor.getCount() != 0)
+            cursor.moveToNext();
+        System.out.println("커서아이디"+cursor.getInt(0));
+        count = DatabaseUtils.queryNumEntries(db, "tb_pet");//db에 있는 데이터 개수
+        //개수만큼 루프를 돌려야함 종류 string을 db에서 받아서 종류대로 버튼 이미지를 세팅해야함
+        for(int i=1;i<=count;i++){
+            btnId=getResources().getIdentifier("prf_pic"+i,"id",this.getPackageName());
+            btnText=getResources().getIdentifier("prf"+i,"id",this.getPackageName());
+
+            switch(cursor.getString(2)){
+                case ("고양이"):
+                    ((ImageButton)findViewById(btnId)).setImageResource(R.drawable.cat);
+                    break;
+                case ("강아지"):
+                    ((ImageButton)findViewById(btnId)).setImageResource(R.drawable.dog);
+                    break;
+                case ("물고기"):
+                    ((ImageButton)findViewById(btnId)).setImageResource(R.drawable.fish);
+                    break;
+                case ("토끼"):
+                    ((ImageButton)findViewById(btnId)).setImageResource(R.drawable.rabbit);
+                    break;
+                case ("파충류"):
+                    ((ImageButton)findViewById(btnId)).setImageResource(R.drawable.snake);
+                    break;
+                case ("설치류"):
+                    ((ImageButton)findViewById(btnId)).setImageResource(R.drawable.rat);
+                    break;
+                case ("기타"):
+                    ((ImageButton)findViewById(btnId)).setImageResource(R.drawable.person);
+                    break;
+            }
+            ((TextView)findViewById(btnText)).setText(cursor.getString(1));
+            cursor.moveToNext();
         }
     }
 

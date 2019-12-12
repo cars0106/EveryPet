@@ -47,6 +47,7 @@
                 android:id="@+id/profileSets"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clickable="true"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -54,11 +55,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
+                    android:clickable="true"
+                    android:onClick="onClickPrf"
                     android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/prf_pic1"
                         style="@style/prf_pic"
+                        android:onClick="onClickPrf"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
@@ -73,12 +77,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
+                    android:clickable="true"
+                    android:onClick="onClickPrf"
                     android:orientation="vertical"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/prf_pic2"
                         style="@style/prf_pic"
+                        android:onClick="onClickPrf"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
@@ -93,12 +100,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
+                    android:clickable="true"
+                    android:onClick="onClickPrf"
                     android:orientation="vertical"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/prf_pic3"
                         style="@style/prf_pic"
+                        android:onClick="onClickPrf"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
@@ -113,12 +123,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
+                    android:clickable="true"
+                    android:onClick="onClickPrf"
                     android:orientation="vertical"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/prf_pic4"
                         style="@style/prf_pic"
+                        android:onClick="onClickPrf"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
@@ -133,12 +146,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
+                    android:clickable="true"
+                    android:onClick="onClickPrf"
                     android:orientation="vertical"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/prf_pic5"
                         style="@style/prf_pic"
+                        android:onClick="onClickPrf"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
@@ -153,12 +169,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
+                    android:clickable="true"
+                    android:onClick="onClickPrf"
                     android:orientation="vertical"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/prf_pic6"
                         style="@style/prf_pic"
+                        android:onClick="onClickPrf"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
@@ -173,12 +192,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
+                    android:clickable="true"
+                    android:onClick="onClickPrf"
                     android:orientation="vertical"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/prf_pic7"
                         style="@style/prf_pic"
+                        android:onClick="onClickPrf"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
@@ -193,12 +215,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0"
+                    android:clickable="true"
+                    android:onClick="onClickPrf"
                     android:orientation="vertical"
                     android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/prf_pic8"
                         style="@style/prf_pic"
+                        android:onClick="onClickPrf"
                         app:srcCompat="@drawable/person" />
 
                     <TextView
