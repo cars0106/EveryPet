@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 
 import com.everypet.everypet.adapter.RecyclerMemoAdapter;
 import com.everypet.everypet.data.MemoData;
+import com.everypet.everypet.decoration.RecyclerDecoration;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -44,6 +45,9 @@ public class MemoActivity extends BaseActivity {
         final RecyclerView recyclerView = findViewById(R.id.recycler_memo);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(manager);
+
+        RecyclerDecoration recyclerDecoration = new RecyclerDecoration(10);
+        recyclerView.addItemDecoration(recyclerDecoration);
 
         if(memoDataArrayList.size() != 0) {
             RecyclerMemoAdapter recyclerMemoAdapter = new RecyclerMemoAdapter(memoDataArrayList);

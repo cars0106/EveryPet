@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.everypet.everypet.adapter.RecyclerAdapter;
 import com.everypet.everypet.data.RecyclerData;
+import com.everypet.everypet.decoration.RecyclerDecoration;
 import com.everypet.everypet.dialog.CustomDialog;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -238,8 +239,10 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
 
                 final RecyclerView recyclerView = findViewById(R.id.recycler_community);
                 RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 3);
-
                 recyclerView.setLayoutManager(manager);
+
+                RecyclerDecoration recyclerDecoration = new RecyclerDecoration(5);
+                recyclerView.addItemDecoration(recyclerDecoration);
 
                 RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerDataArrayList);
                 recyclerView.setAdapter(recyclerAdapter);
