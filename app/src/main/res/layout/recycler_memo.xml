@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/round_edge_custom_text_view"
         android:padding="15dp">
 
         <TextView
@@ -25,6 +26,14 @@
             android:layout_marginTop="10dp"
             android:text="메모 내용"
             android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/text_view_memo_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="right"
+            android:text="날짜" />
 
     </LinearLayout>
 

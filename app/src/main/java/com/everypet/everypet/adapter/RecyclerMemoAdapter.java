@@ -18,11 +18,13 @@ public class RecyclerMemoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static class RecyclerMemoHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
         TextView contentTextView;
+        TextView dateTextView;
 
         public RecyclerMemoHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.text_view_memo_title);
             contentTextView = itemView.findViewById(R.id.text_view_memo_content);
+            dateTextView = itemView.findViewById(R.id.text_view_memo_date);
         }
     }
 
@@ -44,6 +46,7 @@ public class RecyclerMemoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         RecyclerMemoHolder recyclerMemoHolder = (RecyclerMemoHolder) holder;
         recyclerMemoHolder.titleTextView.setText(memoDataArrayList.get(position).memoTitle);
         recyclerMemoHolder.contentTextView.setText(memoDataArrayList.get(position).memoContent);
+        recyclerMemoHolder.dateTextView.setText(memoDataArrayList.get(position).date);
     }
 
     @Override

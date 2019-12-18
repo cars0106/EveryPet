@@ -17,12 +17,19 @@ import com.everypet.everypet.data.MemoData;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import io.realm.Realm;
 
 public class MemoAdderActivity extends BaseActivity implements View.OnClickListener {
 
     EditText titleEditText;
     EditText contentEditText;
+
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,9 @@ public class MemoAdderActivity extends BaseActivity implements View.OnClickListe
 
         titleEditText = findViewById(R.id.edit_text_memo_title);
         contentEditText = findViewById(R.id.edit_text_memo_content);
+
+        Date currentTime = Calendar.getInstance().getTime();
+        date = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault()).format(currentTime);
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -112,9 +122,9 @@ public class MemoAdderActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void execute(Realm realm) {
                     MemoData data = realm.createObject(MemoData.class);
-                    data.id = "Memo";
                     data.memoTitle = title;
                     data.memoContent = content;
+                    data.date = date;
                 }
             });
 
