@@ -3,6 +3,8 @@ package com.everypet.everypet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,8 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.everypet.everypet.adapter.RecyclerMemoAdapter;
+import com.everypet.everypet.data.MemoData;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MemoActivity extends BaseActivity {
 
@@ -22,6 +31,24 @@ public class MemoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.memo);
+
+        Realm.init(this);
+        Realm mRealm = Realm.getDefaultInstance();
+        RealmResults<MemoData> realmResults = mRealm.where(MemoData.class).findAll();
+
+        ArrayList<MemoData> memoDataArrayList = new ArrayList<>();
+        for(int i = 0; i < realmResults.size(); i++) {
+            memoDataArrayList.add(realmResults.get(i));
+        }
+
+        final RecyclerView recyclerView = findViewById(R.id.recycler_memo);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(manager);
+
+        if(memoDataArrayList.size() != 0) {
+            RecyclerMemoAdapter recyclerMemoAdapter = new RecyclerMemoAdapter(memoDataArrayList);
+            recyclerView.setAdapter(recyclerMemoAdapter);
+        }
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
