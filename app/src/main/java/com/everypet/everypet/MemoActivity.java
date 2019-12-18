@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -66,6 +67,35 @@ public class MemoActivity extends BaseActivity {
                 startActivity(intent);
             }
         }));
+
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout_memo);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Realm.init(getApplicationContext());
+                Realm mRealm = Realm.getDefaultInstance();
+                RealmResults<MemoData> realmResults = mRealm.where(MemoData.class).findAll();
+
+                final ArrayList<MemoData> memoDataArrayList = new ArrayList<>();
+                for(int i = 0; i < realmResults.size(); i++) {
+                    memoDataArrayList.add(realmResults.get(i));
+                }
+
+                final RecyclerView recyclerView = findViewById(R.id.recycler_memo);
+                RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
+                recyclerView.setLayoutManager(manager);
+
+                RecyclerDecoration recyclerDecoration = new RecyclerDecoration(10);
+                recyclerView.addItemDecoration(recyclerDecoration);
+
+                if(memoDataArrayList.size() != 0) {
+                    RecyclerMemoAdapter recyclerMemoAdapter = new RecyclerMemoAdapter(memoDataArrayList);
+                    recyclerView.setAdapter(recyclerMemoAdapter);
+                }
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
