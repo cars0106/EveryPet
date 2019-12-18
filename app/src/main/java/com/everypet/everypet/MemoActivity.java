@@ -37,7 +37,7 @@ public class MemoActivity extends BaseActivity {
         Realm mRealm = Realm.getDefaultInstance();
         RealmResults<MemoData> realmResults = mRealm.where(MemoData.class).findAll();
 
-        ArrayList<MemoData> memoDataArrayList = new ArrayList<>();
+        final ArrayList<MemoData> memoDataArrayList = new ArrayList<>();
         for(int i = 0; i < realmResults.size(); i++) {
             memoDataArrayList.add(realmResults.get(i));
         }
@@ -53,6 +53,19 @@ public class MemoActivity extends BaseActivity {
             RecyclerMemoAdapter recyclerMemoAdapter = new RecyclerMemoAdapter(memoDataArrayList);
             recyclerView.setAdapter(recyclerMemoAdapter);
         }
+
+        recyclerView.addOnItemTouchListener(new CommunityActivity.RecyclerItemClickListener(MemoActivity.this, recyclerView, new CommunityActivity.RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getApplicationContext(), MemoDescriptionActivity.class);
+
+                MemoData tmp = memoDataArrayList.get(position);
+                intent.putExtra("title", tmp.memoTitle);
+                intent.putExtra("content", tmp.memoContent);
+
+                startActivity(intent);
+            }
+        }));
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);

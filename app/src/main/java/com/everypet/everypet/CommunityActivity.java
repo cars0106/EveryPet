@@ -229,6 +229,12 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
                             @Override
                             public void onItemClick(View view, int position) {
                                 Intent intent = new Intent(getApplicationContext(), CommunityDescriptionActivity.class);
+
+                                RecyclerData tmp = recyclerDataArrayList.get(position);
+                                intent.putExtra("imageurl", tmp.imageurl);
+                                intent.putExtra("useremail", tmp.useremail);
+                                intent.putExtra("petname", tmp.petname);
+
                                 startActivity(intent);
                             }
                         })
