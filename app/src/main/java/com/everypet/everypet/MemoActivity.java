@@ -30,69 +30,23 @@ import io.realm.RealmResults;
 public class MemoActivity extends BaseActivity {
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        getMemoFromRealm();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.memo);
 
-        Realm.init(this);
-        Realm mRealm = Realm.getDefaultInstance();
-        RealmResults<MemoData> realmResults = mRealm.where(MemoData.class).findAll();
-
-        final ArrayList<MemoData> memoDataArrayList = new ArrayList<>();
-        for(int i = 0; i < realmResults.size(); i++) {
-            memoDataArrayList.add(realmResults.get(i));
-        }
-
-        final RecyclerView recyclerView = findViewById(R.id.recycler_memo);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(manager);
-
-        RecyclerDecoration recyclerDecoration = new RecyclerDecoration(10);
-        recyclerView.addItemDecoration(recyclerDecoration);
-
-        if(memoDataArrayList.size() != 0) {
-            RecyclerMemoAdapter recyclerMemoAdapter = new RecyclerMemoAdapter(memoDataArrayList);
-            recyclerView.setAdapter(recyclerMemoAdapter);
-        }
-
-        recyclerView.addOnItemTouchListener(new CommunityActivity.RecyclerItemClickListener(MemoActivity.this, recyclerView, new CommunityActivity.RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getApplicationContext(), MemoDescriptionActivity.class);
-
-                MemoData tmp = memoDataArrayList.get(position);
-                intent.putExtra("title", tmp.memoTitle);
-                intent.putExtra("content", tmp.memoContent);
-
-                startActivity(intent);
-            }
-        }));
+        getMemoFromRealm();
 
         final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout_memo);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Realm.init(getApplicationContext());
-                Realm mRealm = Realm.getDefaultInstance();
-                RealmResults<MemoData> realmResults = mRealm.where(MemoData.class).findAll();
-
-                final ArrayList<MemoData> memoDataArrayList = new ArrayList<>();
-                for(int i = 0; i < realmResults.size(); i++) {
-                    memoDataArrayList.add(realmResults.get(i));
-                }
-
-                final RecyclerView recyclerView = findViewById(R.id.recycler_memo);
-                RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
-                recyclerView.setLayoutManager(manager);
-
-                RecyclerDecoration recyclerDecoration = new RecyclerDecoration(10);
-                recyclerView.addItemDecoration(recyclerDecoration);
-
-                if(memoDataArrayList.size() != 0) {
-                    RecyclerMemoAdapter recyclerMemoAdapter = new RecyclerMemoAdapter(memoDataArrayList);
-                    recyclerView.setAdapter(recyclerMemoAdapter);
-                }
-
+                getMemoFromRealm();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -165,5 +119,41 @@ public class MemoActivity extends BaseActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    private void getMemoFromRealm() {
+        Realm.init(getApplicationContext());
+        Realm mRealm = Realm.getDefaultInstance();
+        RealmResults<MemoData> realmResults = mRealm.where(MemoData.class).findAll();
+
+        final ArrayList<MemoData> memoDataArrayList = new ArrayList<>();
+        for(int i = 0; i < realmResults.size(); i++) {
+            memoDataArrayList.add(realmResults.get(i));
+        }
+
+        final RecyclerView recyclerView = findViewById(R.id.recycler_memo);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(manager);
+
+        RecyclerDecoration recyclerDecoration = new RecyclerDecoration(10);
+        recyclerView.addItemDecoration(recyclerDecoration);
+
+        if(memoDataArrayList.size() != 0) {
+            RecyclerMemoAdapter recyclerMemoAdapter = new RecyclerMemoAdapter(memoDataArrayList);
+            recyclerView.setAdapter(recyclerMemoAdapter);
+        }
+
+        recyclerView.addOnItemTouchListener(new CommunityActivity.RecyclerItemClickListener(MemoActivity.this, recyclerView, new CommunityActivity.RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getApplicationContext(), MemoDescriptionActivity.class);
+
+                MemoData tmp = memoDataArrayList.get(position);
+                intent.putExtra("title", tmp.memoTitle);
+                intent.putExtra("content", tmp.memoContent);
+
+                startActivity(intent);
+            }
+        }));
     }
 }

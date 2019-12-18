@@ -36,6 +36,12 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
     private ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        getFirebaseDatabase(null);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community);
