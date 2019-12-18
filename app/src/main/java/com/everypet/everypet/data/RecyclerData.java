@@ -11,13 +11,15 @@ public class RecyclerData {
     public String petname;
     public String type;
     public String imageurl;
+    public String useremail;
 
     public RecyclerData() { }
 
-    public RecyclerData(String petname, String type, String imageurl) {
+    public RecyclerData(String petname, String type, String imageurl, String useremail) {
         this.petname = petname;
         this.type = type;
         this.imageurl = imageurl;
+        this.useremail = useremail;
     }
 
     @Exclude
@@ -26,6 +28,7 @@ public class RecyclerData {
         result.put("petname", petname);
         result.put("type", type);
         result.put("imageurl", imageurl);
+        result.put("useremail", useremail);
         return result;
     }
 }

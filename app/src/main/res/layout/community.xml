@@ -45,7 +45,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -70,6 +71,156 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0"
                         android:text="전체" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/cat_pic"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/cat" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="고양이" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/dog_pic"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/dog" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="강아지" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/fish_pic"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/fish" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="물고기" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/rabbit_pic"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/rabbit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="토끼" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/rat_pic"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/rat" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="설치류" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/snake_pic"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/snake" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="파충류" />
 
                 </LinearLayout>
 

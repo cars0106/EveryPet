@@ -32,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="추천하기" />
+            android:text="삭제하기" />
 
         <Button
             android:id="@+id/button_back"

@@ -22,6 +22,8 @@ import com.everypet.everypet.adapter.RecyclerAdapter;
 import com.everypet.everypet.data.RecyclerData;
 import com.everypet.everypet.dialog.CustomDialog;
 import com.everypet.everypet.font.BaseActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CommunityActivity extends BaseActivity {
+public class CommunityActivity extends BaseActivity implements View.OnClickListener {
 
     private CustomDialog customDialog;
 
@@ -41,7 +43,10 @@ public class CommunityActivity extends BaseActivity {
     private View.OnClickListener positiveListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "추천 버튼이 눌렸습니다.", Toast.LENGTH_LONG).show();
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+            String userEmail = account.getEmail();
+
+            Toast.makeText(getApplicationContext(), "삭제되었습니다." + userEmail, Toast.LENGTH_LONG).show();
             customDialog.dismiss();
         }
     };
@@ -49,7 +54,6 @@ public class CommunityActivity extends BaseActivity {
     private View.OnClickListener negativeListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "뒤로가기 버튼이 눌렸습니다.", Toast.LENGTH_LONG).show();
             customDialog.dismiss();
         }
     };
@@ -59,7 +63,23 @@ public class CommunityActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community);
 
-        getFirebaseDatabase();
+        getFirebaseDatabase(null);
+
+        ImageButton picAllImageButton = findViewById(R.id.prf_pic);
+        ImageButton picCatImageButton = findViewById(R.id.cat_pic);
+        ImageButton picDogImageButton = findViewById(R.id.dog_pic);
+        ImageButton picFishImageButton = findViewById(R.id.fish_pic);
+        ImageButton picRabbitImageButton = findViewById(R.id.rabbit_pic);
+        ImageButton picRatImageButton = findViewById(R.id.rat_pic);
+        ImageButton picSnakeImageButton = findViewById(R.id.snake_pic);
+
+        picAllImageButton.setOnClickListener(this);
+        picCatImageButton.setOnClickListener(this);
+        picDogImageButton.setOnClickListener(this);
+        picFishImageButton.setOnClickListener(this);
+        picRabbitImageButton.setOnClickListener(this);
+        picRatImageButton.setOnClickListener(this);
+        picSnakeImageButton.setOnClickListener(this);
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -131,6 +151,31 @@ public class CommunityActivity extends BaseActivity {
                 .show();
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.prf_pic) {
+            getFirebaseDatabase(null);
+        }
+        else if (view.getId() == R.id.cat_pic) {
+            getFirebaseDatabase("cat");
+        }
+        else if (view.getId() == R.id.dog_pic) {
+            getFirebaseDatabase("dog");
+        }
+        else if (view.getId() == R.id.fish_pic) {
+            getFirebaseDatabase("fish");
+        }
+        else if (view.getId() == R.id.rabbit_pic) {
+            getFirebaseDatabase("rabbit");
+        }
+        else if (view.getId() == R.id.rat_pic) {
+            getFirebaseDatabase("rat");
+        }
+        else if (view.getId() == R.id.snake_pic) {
+            getFirebaseDatabase("snake");
+        }
+    }
+
     public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 
         private OnItemClickListener mListener;
@@ -166,7 +211,7 @@ public class CommunityActivity extends BaseActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
     }
 
-    public void getFirebaseDatabase() {
+    public void getFirebaseDatabase(final String toFind) {
         final ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -174,16 +219,25 @@ public class CommunityActivity extends BaseActivity {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     RecyclerData get = snapshot.getValue(RecyclerData.class);
+
+                    if (toFind == null) {
                     recyclerDataArrayList.add(get);
+                    }
+                    else {
+                        if (get.type.equals(toFind)) {
+                            recyclerDataArrayList.add(get);
+                        }
+                    }
                 }
 
                 for(int i = 0; i < recyclerDataArrayList.size(); i++) {
                     RecyclerData data = recyclerDataArrayList.get(i);
+
                     Log.d("CommunityActivity", "result : " + "petname = " + data.petname + "type = " + data.type + "imageurl = " + data.imageurl);
                 }
 
                 final RecyclerView recyclerView = findViewById(R.id.recycler_community);
-                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
+                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 3);
 
                 recyclerView.setLayoutManager(manager);
 

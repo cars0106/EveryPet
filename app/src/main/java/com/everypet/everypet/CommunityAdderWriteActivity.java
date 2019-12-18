@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 import com.everypet.everypet.data.RecyclerData;
 import com.everypet.everypet.font.BaseActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -263,7 +265,11 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
 
-        RecyclerData data = new RecyclerData(petname, type, imageurl);
+        String useremail = null;
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        useremail = account.getEmail();
+
+        RecyclerData data = new RecyclerData(petname, type, imageurl, useremail);
         postValues = data.toMap();
 
         childUpdates.put("/photo_list/" + petname, postValues);
