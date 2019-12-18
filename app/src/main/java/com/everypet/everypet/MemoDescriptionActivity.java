@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.everypet.everypet.data.MemoData;
+
+import io.realm.Realm;
+
 public class MemoDescriptionActivity extends Activity implements View.OnClickListener {
 
     Button deleteButton;
@@ -19,6 +23,8 @@ public class MemoDescriptionActivity extends Activity implements View.OnClickLis
 
     EditText titleEditText;
     EditText contentEditText;
+
+    String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,7 @@ public class MemoDescriptionActivity extends Activity implements View.OnClickLis
 
         //Intent 처리
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
+        title = intent.getStringExtra("title");
         String content = intent.getStringExtra("content");
 
         titleEditText = findViewById(R.id.edit_text_memo_description_title);
@@ -52,10 +58,33 @@ public class MemoDescriptionActivity extends Activity implements View.OnClickLis
             finish();
         }
         else if (view.getId() == R.id.button_memo_modified) {
+            Realm.init(getApplicationContext());
+            Realm mRealm = Realm.getDefaultInstance();
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    MemoData modifiedData = realm.where(MemoData.class).equalTo("memoTitle", title).findFirst();
+                    modifiedData.memoTitle = titleEditText.getText().toString();
+                    modifiedData.memoContent = contentEditText.getText().toString();
+                }
+            });
+
             Toast.makeText(getApplicationContext(), "메모가 수정되었습니다.", Toast.LENGTH_LONG).show();
             finish();
         }
         else if (view.getId() == R.id.button_memo_delete) {
+            Realm.init(getApplicationContext());
+            Realm mRealm = Realm.getDefaultInstance();
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    MemoData deleteData = realm.where(MemoData.class).equalTo("memoTitle", title).findFirst();
+                    if(deleteData != null) {
+                        deleteData.deleteFromRealm();
+                    }
+                }
+            });
+
             Toast.makeText(getApplicationContext(), "메모가 삭제되었습니다.", Toast.LENGTH_LONG).show();
             finish();
         }
