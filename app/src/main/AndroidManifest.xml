@@ -16,16 +16,17 @@
         <activity android:name=".font.BaseActivity"></activity>
         <activity android:name=".ProfileAdderWriteActivity" />
         <activity android:name=".ProfileAdderChooseAnimalActivity"/>
-        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".ProfileActivity" android:launchMode="singleTask"/>
         <activity android:name=".CommunityAdderWriteActivity" />
         <activity android:name=".CommunityAdderChooseAnimalActivity" />
-        <activity android:name=".CommunityActivity" />
+        <activity android:name=".CommunityActivity" android:launchMode="singleTask"/>
         <activity android:name=".DiaryAdderActivity" />
-        <activity android:name=".DiaryActivity" />
+        <activity android:name=".DiaryActivity" android:launchMode="singleTask"/>
         <activity android:name=".MemoAdderActivity" />
-        <activity android:name=".MemoActivity" />
+        <activity android:name=".MemoActivity" android:launchMode="singleTask"/>
         <activity android:name=".ToDoAdderActivity" />
-        <activity android:name=".ToDoActivity">
+        <activity android:name=".ToDoActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name=".LoginMainActivity" />
             </intent-filter>

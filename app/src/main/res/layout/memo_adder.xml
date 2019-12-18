@@ -20,17 +20,25 @@
             android:textColor="#FF9800"
             android:textSize="30dp" />
 
+        <EditText
+            android:id="@+id/edit_text_memo_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="제목을 여기에 입력해주세요!" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="300자 이내로 메모 쓰기" />
 
         <EditText
+            android:id="@+id/edit_text_memo_content"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:hint="메모"/>
+            android:hint="메모 내용을 여기에 써주세요!"/>
 
         <Button
+            android:id="@+id/button_write_memo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

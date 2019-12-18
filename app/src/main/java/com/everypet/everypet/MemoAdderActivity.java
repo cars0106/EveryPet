@@ -8,16 +8,32 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.everypet.everypet.data.MemoData;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MemoAdderActivity extends BaseActivity {
+import io.realm.Realm;
+
+public class MemoAdderActivity extends BaseActivity implements View.OnClickListener {
+
+    EditText titleEditText;
+    EditText contentEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.memo_adder);
+
+        Button addMemoButton = findViewById(R.id.button_write_memo);
+        addMemoButton.setOnClickListener(this);
+
+        titleEditText = findViewById(R.id.edit_text_memo_title);
+        contentEditText = findViewById(R.id.edit_text_memo_content);
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -82,5 +98,28 @@ public class MemoAdderActivity extends BaseActivity {
                 })
                 .setNegativeButton("아니오", null)
                 .show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.button_write_memo) {
+            final String title = titleEditText.getText().toString();
+            final String content = contentEditText.getText().toString();
+
+            Realm.init(this);
+            Realm mRealm = Realm.getDefaultInstance();
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    MemoData data = realm.createObject(MemoData.class);
+                    data.id = "Memo";
+                    data.memoTitle = title;
+                    data.memoContent = content;
+                }
+            });
+
+            Toast.makeText(getApplicationContext(), "메모가 저장되었습니다.", Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 }
