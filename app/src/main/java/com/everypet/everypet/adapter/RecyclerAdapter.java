@@ -48,7 +48,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         RecyclerViewHolder recyclerViewHolder = (RecyclerViewHolder) holder;
         recyclerViewHolder.nameTextView.setText(recyclerDataArrayList.get(position).petname);
         recyclerViewHolder.typeTextView.setText(recyclerDataArrayList.get(position).type);
-        Glide.with(((RecyclerViewHolder) holder).imageView)
+        Glide.with(((RecyclerViewHolder) holder).imageView.getContext())
                 .load(recyclerDataArrayList.get(position).imageurl)
                 .into(((RecyclerViewHolder) holder).imageView);
     }

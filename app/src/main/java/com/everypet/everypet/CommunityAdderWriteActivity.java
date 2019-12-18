@@ -19,10 +19,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.everypet.everypet.data.RecyclerData;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +32,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -37,11 +41,16 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommunityAdderWriteActivity extends BaseActivity implements View.OnClickListener {
     private final int REQUEST_CODE = 0;
 
     ImageView imageView;
+    EditText editText;
+
+    String type;
 
     Uri uri;
 
@@ -75,7 +84,7 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
         setContentView(R.layout.community_adder_write);
 
         Intent intent = getIntent();
-        String type = intent.getStringExtra("Type");
+        type = intent.getStringExtra("Type");
         Log.d("CommunityAdderWriteActivity", "타입 : " + type);
 
         ImageView animalTypeImageView = findViewById(R.id.image_view_community_adder_write_animal_type);
@@ -117,6 +126,7 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
         addCommunityButton.setOnClickListener(this);
 
         imageView = findViewById(R.id.image_view_community_adder);
+        editText = findViewById(R.id.edit_text_pet_name);
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -212,6 +222,16 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                riverRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        final Uri downloadUrl = uri;
+                                        Log.d("CommunityAdderWriteActivity", "downloadUri" + downloadUrl);
+
+                                        String petName = editText.getText().toString();
+                                        writeNewPost(petName, type, downloadUrl.toString());
+                                    }
+                                });
                                 progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(), "업로드 완료", Toast.LENGTH_LONG).show();
                                 finish();
@@ -239,6 +259,14 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
     }
 
     private void writeNewPost(String petname, String type, String imageurl) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
 
+        RecyclerData data = new RecyclerData(petname, type, imageurl);
+        postValues = data.toMap();
+
+        childUpdates.put("/photo_list/" + petname, postValues);
+        databaseReference.updateChildren(childUpdates);
     }
 }
