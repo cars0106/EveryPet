@@ -54,7 +54,7 @@ public class ProfileActivity extends BaseActivity {
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select name, kind, birthDay, gender, weight, height, symptom, careful from tb_pet order by _id asc", null);
-        if(cursor != null)  count = DatabaseUtils.queryNumEntries(db,"tb_pet");
+        if(cursor != null && cursor.getCount() != 0)  count = DatabaseUtils.queryNumEntries(db,"tb_pet");
         db.close();
 
         int resourceId;
