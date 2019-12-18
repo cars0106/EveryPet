@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.everypet.everypet.adapter.RecyclerAdapter;
 import com.everypet.everypet.data.RecyclerData;
 import com.everypet.everypet.decoration.RecyclerDecoration;
-import com.everypet.everypet.dialog.CustomDialog;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -37,27 +36,7 @@ import java.util.ArrayList;
 
 public class CommunityActivity extends BaseActivity implements View.OnClickListener {
 
-    private CustomDialog customDialog;
-
     private ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
-
-    private View.OnClickListener positiveListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-            String userEmail = account.getEmail();
-
-            Toast.makeText(getApplicationContext(), "삭제되었습니다." + userEmail, Toast.LENGTH_LONG).show();
-            customDialog.dismiss();
-        }
-    };
-
-    private View.OnClickListener negativeListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            customDialog.dismiss();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,8 +228,8 @@ public class CommunityActivity extends BaseActivity implements View.OnClickListe
                 recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(CommunityActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                customDialog = new CustomDialog(CommunityActivity.this, positiveListener, negativeListener);
-                                customDialog.show();
+                                Intent intent = new Intent(getApplicationContext(), CommunityDescriptionActivity.class);
+                                startActivity(intent);
                             }
                         })
                 );

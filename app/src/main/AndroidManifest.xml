@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.everypet.everypet">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,19 +10,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".font.BaseActivity"></activity>
+        <activity android:name=".CommunityDescriptionActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+        <activity android:name=".font.BaseActivity" />
         <activity android:name=".ProfileAdderWriteActivity" />
-        <activity android:name=".ProfileAdderChooseAnimalActivity"/>
-        <activity android:name=".ProfileActivity" android:launchMode="singleTask"/>
+        <activity android:name=".ProfileAdderChooseAnimalActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".CommunityAdderWriteActivity" />
         <activity android:name=".CommunityAdderChooseAnimalActivity" />
-        <activity android:name=".CommunityActivity" android:launchMode="singleTask"/>
+        <activity
+            android:name=".CommunityActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".DiaryAdderActivity" />
-        <activity android:name=".DiaryActivity" android:launchMode="singleTask"/>
+        <activity
+            android:name=".DiaryActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".MemoAdderActivity" />
-        <activity android:name=".MemoActivity" android:launchMode="singleTask"/>
+        <activity
+            android:name=".MemoActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ToDoAdderActivity" />
-        <activity android:name=".ToDoActivity"
+        <activity
+            android:name=".ToDoActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name=".LoginMainActivity" />
@@ -39,5 +47,8 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
