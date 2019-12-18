@@ -16,11 +16,28 @@
             android:layout_height="wrap_content"
             android:src="@drawable/hedgehog"/>
 
-        <TextView
-            android:id="@+id/community_text_view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PetName" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/community_text_view_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PetName" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/community_text_view_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PetName" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -18,15 +19,24 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.everypet.everypet.adapter.RecyclerAdapter;
+import com.everypet.everypet.data.RecyclerData;
 import com.everypet.everypet.dialog.CustomDialog;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class CommunityActivity extends BaseActivity {
 
     private CustomDialog customDialog;
+
+    private ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
 
     private View.OnClickListener positiveListener = new View.OnClickListener() {
         @Override
@@ -49,32 +59,7 @@ public class CommunityActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community);
 
-        //Recycler View implementation
-        final RecyclerView recyclerView = findViewById(R.id.recycler_community);
-        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
-
-        recyclerView.setLayoutManager(manager);
-
-        ArrayList<RecyclerInfo> recyclerInfoArrayList = new ArrayList<>();
-        recyclerInfoArrayList.add(new RecyclerInfo("1번", R.drawable.cat));
-        recyclerInfoArrayList.add(new RecyclerInfo("2번", R.drawable.dog));
-        recyclerInfoArrayList.add(new RecyclerInfo("3번", R.drawable.fish));
-        recyclerInfoArrayList.add(new RecyclerInfo("4번", R.drawable.hedgehog));
-        recyclerInfoArrayList.add(new RecyclerInfo("5번", R.drawable.person));
-        recyclerInfoArrayList.add(new RecyclerInfo("6번", R.drawable.rabbit));
-        recyclerInfoArrayList.add(new RecyclerInfo("7번", R.drawable.rat));
-        recyclerInfoArrayList.add(new RecyclerInfo("8번", R.drawable.snake));
-
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerInfoArrayList);
-        recyclerView.setAdapter(recyclerAdapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(CommunityActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        customDialog = new CustomDialog(CommunityActivity.this, positiveListener, negativeListener);
-                        customDialog.show();
-                    }
-                })
-        );
+        getFirebaseDatabase();
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -146,7 +131,7 @@ public class CommunityActivity extends BaseActivity {
                 .show();
     }
 
-     public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
+    public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 
         private OnItemClickListener mListener;
         private GestureDetector mGestureDetector;
@@ -179,5 +164,47 @@ public class CommunityActivity extends BaseActivity {
 
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
+    }
+
+    public void getFirebaseDatabase() {
+        final ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                recyclerDataArrayList.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    RecyclerData get = snapshot.getValue(RecyclerData.class);
+                    recyclerDataArrayList.add(get);
+                }
+
+                for(int i = 0; i < recyclerDataArrayList.size(); i++) {
+                    RecyclerData data = recyclerDataArrayList.get(i);
+                    Log.d("CommunityActivity", "result : " + "petname = " + data.petname + "type = " + data.type + "imageurl = " + data.imageurl);
+                }
+
+                final RecyclerView recyclerView = findViewById(R.id.recycler_community);
+                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
+
+                recyclerView.setLayoutManager(manager);
+
+                RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerDataArrayList);
+                recyclerView.setAdapter(recyclerAdapter);
+                recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(CommunityActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                customDialog = new CustomDialog(CommunityActivity.this, positiveListener, negativeListener);
+                                customDialog.show();
+                            }
+                        })
+                );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("getFirebaseDatabase","loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Query query = FirebaseDatabase.getInstance().getReference().child("photo_list");
+        query.addListenerForSingleValueEvent(valueEventListener);
     }
 }
