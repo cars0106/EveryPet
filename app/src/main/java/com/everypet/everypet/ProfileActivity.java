@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ import com.everypet.everypet.font.BaseActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -48,8 +51,10 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
     ImageView imageView;
 
+    Button signOutButton;
+
     @Override
-    protected  void onStart() {
+    protected void onStart() {
         super.onStart();
         getInitProfileFromRealm();
         setUserInfo();
@@ -102,6 +107,12 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
 
         getInitProfileFromRealm();
         setUserInfo();
+
+        signOutButton = findViewById(R.id.button_sign_out);
+        signOutButton.setOnClickListener(this);
+
+        ImageButton personImageButton = findViewById(R.id.image_button_profile_person);
+        personImageButton.setOnClickListener(this);
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -161,22 +172,38 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             startActivity(intent);
         }
         else if (view.getId() == R.id.profile_cat) {
+            signOutButton.setVisibility(View.GONE);
             applyProfile("cat");
         }
         else if (view.getId() == R.id.profile_dog) {
+            signOutButton.setVisibility(View.GONE);
             applyProfile("dog");
         }
         else if (view.getId() == R.id.profile_fish) {
+            signOutButton.setVisibility(View.GONE);
             applyProfile("fish");
         }
         else if (view.getId() == R.id.profile_rabbit) {
+            signOutButton.setVisibility(View.GONE);
             applyProfile("rabbit");
         }
         else if (view.getId() == R.id.profile_rat) {
+            signOutButton.setVisibility(View.GONE);
             applyProfile("rat");
         }
         else if (view.getId() == R.id.profile_snake) {
+            signOutButton.setVisibility(View.GONE);
             applyProfile("snake");
+        }
+        else if (view.getId() == R.id.button_sign_out) {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            firebaseAuth.signOut();
+            finish();
+            startActivity(new Intent(getApplicationContext(), LogInActivity.class));
+        }
+        else if (view.getId() == R.id.image_button_profile_person) {
+            setUserInfo();
+            signOutButton.setVisibility(View.VISIBLE);
         }
     }
 
