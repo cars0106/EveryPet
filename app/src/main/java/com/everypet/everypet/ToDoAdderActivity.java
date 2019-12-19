@@ -4,33 +4,55 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TimePicker;
 
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class ToDoAdderActivity extends BaseActivity {
+    final Calendar calendar = Calendar.getInstance();
+
     Button save;
-    Button who;
+    Spinner who;
     Button date;
     Button time;
     EditText what;
     Switch notice;
+    long count;
+    Spinner spinner;
+    int y=0, m=0, d=0, h=0, mi=0;
+
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.to_do_adder);
 
+        date = findViewById(R.id.date);
+        time = findViewById(R.id.time);
         save = findViewById(R.id.upload_toDo);
+
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.getMenu().getItem(0).setChecked(true);
@@ -79,6 +101,20 @@ public class ToDoAdderActivity extends BaseActivity {
             }
         });
 
+        //날짜설정 버튼 눌렀을 때 datepicker dialog
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDate();
+            }
+        });
+        //시간설정 버튼 눌렀을 때 timepicker dialog
+        time.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                showTime();
+            }
+        });
+
         //save버튼 눌렀을때 db에 값이 저장되고 ToDoActivity로 돌아가야함.
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,9 +130,27 @@ public class ToDoAdderActivity extends BaseActivity {
                 finish();
             }
         });
+
+        DBHelper helper = new DBHelper(this);
+        SQLiteDatabase db = helper.getReadableDatabase();
+        ArrayList namelist = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM tb_pet order by _id asc", null);
+        if (cursor != null)
+            count = DatabaseUtils.queryNumEntries(db, "tb_pet");//db에 있는 데이터 개수
+        if (cursor != null && cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                namelist.add(cursor.getString(1));
+                cursor.moveToNext();
+            }
+        }
+        db.close();
+
+        spinner = findViewById(R.id.spinner_who);
+        arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, namelist);
+        spinner.setAdapter(arrayAdapter);
     }
 
-    @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -110,5 +164,34 @@ public class ToDoAdderActivity extends BaseActivity {
                 })
                 .setNegativeButton("아니오", null)
                 .show();
+    }
+
+    void showDate() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                y = year;
+                m = month+1;
+                d = dayOfMonth;
+                date.setText(y+"년 "+m+"월 "+d+"일");
+            }
+        },calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.setMessage("날짜설정");
+        datePickerDialog.show();
+    }
+
+    void showTime() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                h = hourOfDay;
+                mi = minute;
+                time.setText(h+"시 "+mi+"분");
+            }
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+
+        timePickerDialog.setMessage("메시지");
+        timePickerDialog.show();
     }
 }
