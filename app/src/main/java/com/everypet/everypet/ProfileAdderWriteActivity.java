@@ -1,97 +1,104 @@
 package com.everypet.everypet;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.DialogInterface;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.everypet.everypet.data.ProfileData;
 import com.everypet.everypet.font.BaseActivity;
 
-import org.w3c.dom.Text;
+import java.io.InputStream;
 
-public class ProfileAdderWriteActivity extends BaseActivity {
+import io.realm.Realm;
 
-    ImageView kindImg;
-    TextView kindName;
+public class ProfileAdderWriteActivity extends BaseActivity implements View.OnClickListener {
+    final int REQUEST_CODE = 100;
 
-    EditText name;
-    EditText bday;
-    EditText gender;
-    EditText weight;
-    EditText height;
-    EditText symptom;
-    EditText careful;
+    String type;
+
+    EditText nameEditText;
+    EditText birthdayEditText;
+    EditText genderEditText;
+    EditText weightEditText;
+    EditText heightEditText;
+    EditText sickListEditText;
+    EditText watchOutEditText;
+
+    ImageView imageView;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_adder_write);
 
-        kindImg = findViewById(R.id.prf_kindImg);
-        kindName = findViewById(R.id.prf_kindStr);
-        name = findViewById(R.id.prf_name);
-        bday = findViewById(R.id.prf_bday);
-        gender = findViewById(R.id.prf_gender);
-        weight = findViewById(R.id.prf_weight);
-        height = findViewById(R.id.prf_height);
-        symptom = findViewById(R.id.prf_symptom);
-        careful = findViewById(R.id.prf_careful);
+        Intent intent = getIntent();
+        type = intent.getStringExtra("Type");
+        Log.d("ProfileAdderWriteActivity", "타입 : " + type);
 
-        //Bundle extras=getIntent().getExtras();
-        final Intent intent = getIntent();
-        String s = intent.getStringExtra("string");
-        kindName.setText(s);
-        switch (s) {
-            case ("고양이"):
-                kindImg.setImageResource(R.drawable.cat);
+        ImageView typeImageView = findViewById(R.id.image_view_profile_type);
+        TextView typeTextView = findViewById(R.id.text_view_profile_type);
+        switch (type) {
+            case "cat" :
+                typeImageView.setImageResource(R.drawable.cat);
+                typeTextView.setText("고양이");
                 break;
-            case ("강아지"):
-                kindImg.setImageResource(R.drawable.dog);
+            case "dog" :
+                typeImageView.setImageResource(R.drawable.dog);
+                typeTextView.setText("강아지");
                 break;
-            case ("물고기"):
-                kindImg.setImageResource(R.drawable.fish);
+            case "fish" :
+                typeImageView.setImageResource(R.drawable.fish);
+                typeTextView.setText("물고기");
                 break;
-            case ("토끼"):
-                kindImg.setImageResource(R.drawable.rabbit);
+            case "rabbit" :
+                typeImageView.setImageResource(R.drawable.rabbit);
+                typeTextView.setText("토끼");
                 break;
-            case ("파충류"):
-                kindImg.setImageResource(R.drawable.snake);
+            case "snake" :
+                typeImageView.setImageResource(R.drawable.snake);
+                typeTextView.setText("파충류");
                 break;
-            case ("설치류"):
-                kindImg.setImageResource(R.drawable.rat);
+            case "rat" :
+                typeImageView.setImageResource(R.drawable.rat);
+                typeTextView.setText("설치류");
                 break;
-            case ("기타"):
-                kindImg.setImageResource(R.drawable.person);
+            case "etc" :
+                typeTextView.setText("기타");
                 break;
-
         }
-    }
 
-    public void onClick(View v) {
+        imageView = findViewById(R.id.image_view_profile);
 
-        // 저장하기 버튼누르면 db에 프로필 정보가 저장되어야함
-        DBHelper helper = new DBHelper(this);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        db.execSQL("insert into tb_pet (name, kind, birthDay, gender, weight, height, symptom, careful) values (?, ?, ?, ?, ?, ?, ?, ?)"
-                , new String[]{name.getText().toString(), kindName.getText().toString(), bday.getText().toString(), gender.getText().toString(),
-                        weight.getText().toString(), height.getText().toString(), symptom.getText().toString(), careful.getText().toString()});
-        db.close();
+        nameEditText = findViewById(R.id.edit_text_profile_name);
+        birthdayEditText = findViewById(R.id.edit_text_profile_date);
+        genderEditText = findViewById(R.id.edit_text_profile_gender);
+        weightEditText = findViewById(R.id.edit_text_profile_weight);
+        heightEditText = findViewById(R.id.edit_text_profile_height);
+        sickListEditText = findViewById(R.id.edit_text_profile_sick_list);
+        watchOutEditText = findViewById(R.id.edit_text_profile_watch_out);
 
-        setResult(RESULT_OK);
-        finish();
+        Button imageButton = findViewById(R.id.button_profile_add_image);
+        imageButton.setOnClickListener(this);
+        Button savedButton = findViewById(R.id.button_save_pet);
+        savedButton.setOnClickListener(this);
     }
 
     @Override
@@ -110,5 +117,87 @@ public class ProfileAdderWriteActivity extends BaseActivity {
                 })
                 .setNegativeButton("아니오", null)
                 .show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                    imageUri = data.getData();
+
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    inputStream.close();
+
+                    imageView.setImageBitmap(bitmap);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.button_profile_add_image) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(ProfileAdderWriteActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            }
+            else {
+                Intent imageIntent = new Intent();
+                imageIntent.setType("image/*");
+                imageIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(imageIntent, REQUEST_CODE);
+            }
+        }
+        else if (view.getId() == R.id.button_save_pet) {
+            final String name = nameEditText.getText().toString();
+            final String birthday = birthdayEditText.getText().toString();
+            final String gender = genderEditText.getText().toString();
+            final double weight = Double.parseDouble(weightEditText.getText().toString());
+            final double height = Double.parseDouble(heightEditText.getText().toString());
+            final String sickList = sickListEditText.getText().toString();
+            final String watchOut = watchOutEditText.getText().toString();
+
+            if (weight != 0 && height != 0) {
+                Realm.init(getApplicationContext());
+                Realm mRealm = Realm.getDefaultInstance();
+                mRealm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        ProfileData profileData = realm.createObject(ProfileData.class);
+                        profileData.profileName = name;
+                        profileData.profileBirthday = birthday;
+                        profileData.profileGender = gender;
+                        profileData.profileWeight = weight;
+                        profileData.profileHeight = height;
+                        profileData.profileSickList = sickList;
+                        profileData.profileWatchOut = watchOut;
+                        profileData.profileImageUri = imageUri;
+                        profileData.profileType = type;
+                    }
+                });
+
+                Toast.makeText(getApplicationContext(), "프로필 등록이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                finish();
+            }
+            else if (weight <= 0) {
+                Toast.makeText(getApplicationContext(), "체중을 입력해주세요!", Toast.LENGTH_LONG).show();
+            }
+            else if (height <= 0) {
+                Toast.makeText(getApplicationContext(), "신장을 입력해주세요!", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "알 수 없는 오류가 발생했습니다.", Toast.LENGTH_LONG).show();
+            }
+            finish();
+        }
     }
 }

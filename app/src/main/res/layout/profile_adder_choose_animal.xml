@@ -45,7 +45,6 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:clickable="true"
-                        android:onClick="onClickKind"
                         app:srcCompat="@drawable/cat" />
 
                     <TextView
@@ -67,7 +66,6 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:clickable="true"
-                        android:onClick="onClickKind"
                         app:srcCompat="@drawable/dog" />
 
                     <TextView
@@ -89,7 +87,6 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:clickable="true"
-                        android:onClick="onClickKind"
                         app:srcCompat="@drawable/fish" />
 
                     <TextView
@@ -118,7 +115,6 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:clickable="true"
-                        android:onClick="onClickKind"
                         app:srcCompat="@drawable/rabbit" />
 
                     <TextView
@@ -140,7 +136,6 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:clickable="true"
-                        android:onClick="onClickKind"
                         app:srcCompat="@drawable/snake" />
 
                     <TextView
@@ -162,7 +157,6 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:clickable="true"
-                        android:onClick="onClickKind"
                         app:srcCompat="@drawable/rat" />
 
                     <TextView
@@ -182,7 +176,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
                 android:clickable="true"
-                android:onClick="onClickKind"
                 android:src="@drawable/person" />
 
             <TextView

@@ -32,13 +32,13 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/prf_kindImg"
+                android:id="@+id/image_view_profile_type"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/person" />
 
             <TextView
-                android:id="@+id/prf_kindStr"
+                android:id="@+id/text_view_profile_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="동물 종류" />
@@ -79,7 +79,7 @@
                                 android:text="이름 : " />
 
                             <EditText
-                                android:id="@+id/prf_name"
+                                android:id="@+id/edit_text_profile_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint='이름'
@@ -97,11 +97,11 @@
                                 android:text="생일 : " />
 
                             <EditText
-                                android:id="@+id/prf_bday"
+                                android:id="@+id/edit_text_profile_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint='생일'
-                                android:inputType="textShortMessage|numberSigned" />
+                                android:inputType="date" />
 
                         </LinearLayout>
 
@@ -115,7 +115,7 @@
                                 android:text="성별 : " />
 
                             <EditText
-                                android:id="@+id/prf_gender"
+                                android:id="@+id/edit_text_profile_gender"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint='성별'
@@ -133,7 +133,7 @@
                                 android:text="체중 : " />
 
                             <EditText
-                                android:id="@+id/prf_weight"
+                                android:id="@+id/edit_text_profile_weight"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint='체중'
@@ -151,7 +151,7 @@
                                 android:text="신장 : " />
 
                             <EditText
-                                android:id="@+id/prf_height"
+                                android:id="@+id/edit_text_profile_height"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint='신장'
@@ -169,8 +169,16 @@
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/image_view_profile"
                             android:layout_width="150dp"
-                            android:layout_height="150dp" />
+                            android:layout_height="150dp"
+                            android:src="@drawable/person" />
+
+                        <Button
+                            android:id="@+id/button_profile_add_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="사진 추가하기" />
 
                     </LinearLayout>
 
@@ -187,7 +195,7 @@
                         android:text="질병내역 : " />
 
                     <EditText
-                        android:id="@+id/prf_symptom"
+                        android:id="@+id/edit_text_profile_sick_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint='질병내역'
@@ -207,7 +215,7 @@
                         android:text="주의사항 : " />
 
                     <EditText
-                        android:id="@+id/prf_careful"
+                        android:id="@+id/edit_text_profile_watch_out"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="주의사항"
@@ -228,7 +236,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/save_newPet"
+        android:id="@+id/button_save_pet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
