@@ -49,8 +49,12 @@ public class ToDoAdderActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.to_do_adder);
 
+        who = findViewById(R.id.spinner_who);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
+        what = findViewById(R.id.what);
+        notice = findViewById(R.id.notice);
+
         save = findViewById(R.id.upload_toDo);
 
         // BottomNavigationBar implementation
@@ -119,18 +123,19 @@ public class ToDoAdderActivity extends BaseActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                DBHelper helper = new DBHelper(getApplicationContext());
-//                SQLiteDatabase db = helper.getWritableDatabase();
-//                db.execSQL("insert into tb_todo (name, date, time, what, notice) values (?, ?, ?, ?, ?)"
-//                        , new String[]{who.getText().toString(), date.getText().toString(), time.getText().toString(),
-//                                what.getText().toString(), String.valueOf(notice.isChecked())});
-//                db.close();
+                DBHelper helper = new DBHelper(getApplicationContext());
+                SQLiteDatabase db = helper.getWritableDatabase();
+                db.execSQL("insert into tb_todo (name, date, time, what, notice) values (?, ?, ?, ?, ?)"
+                        , new String[]{who.getSelectedItem().toString(), date.getText().toString(), time.getText().toString(),
+                                what.getText().toString(), String.valueOf(notice.isChecked())});
+                db.close();
 
                 setResult(RESULT_OK);
                 finish();
             }
         });
 
+        //동물이름 spinner 동적으로 설정하는 부분
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
         ArrayList namelist = new ArrayList<>();

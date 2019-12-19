@@ -6,5 +6,5 @@ public class ToDoData {
     public String date;
     public String time;
     public String what;
-    public Boolean isChecked;
+    public String isChecked;
 }

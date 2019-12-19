@@ -13,15 +13,19 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,6 +45,7 @@ public class ProfileActivity extends BaseActivity {
     EditText height;
     EditText symptom;
     EditText careful;
+    ImageView pic;
     long count;
 
     @Override
@@ -161,7 +166,8 @@ public class ProfileActivity extends BaseActivity {
         });
         super.onRestart();
     }
-//     하려고 했던 것: 현재 액티비티에서 동물들 탭버튼 누르면 그 동물에 맞는 프로필 띄우기
+
+    // 현재 액티비티에서 동물들 탭버튼 누르면 그 동물에 맞는 프로필 띄우기
     public void onClickPrf(View v){
         switch(v.getId()){
             case (R.id.prf_pic1):
@@ -202,14 +208,12 @@ public class ProfileActivity extends BaseActivity {
         height = findViewById(R.id.prf_height);
         symptom = findViewById(R.id.prf_symptom);
         careful = findViewById(R.id.prf_careful);
+        pic = findViewById(R.id.pic);
 
         Cursor cursor = db.rawQuery("SELECT * FROM tb_pet order by _id asc", null);
-//        if(cursor != null) {
-//            count = DatabaseUtils.queryNumEntries(db,"tb_pet");//db에 있는 데이터 개수
-//        }System.out.println("/////////////count값은\t"+count);
         if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
-            for(int i=1;i<num;i++) cursor.moveToNext(); //이 부분에서 자꾸 이상한 곳 가리키는 듯
+            for(int i=1;i<num;i++) cursor.moveToNext();
             name.setText(cursor.getString(1));
             bday.setText(cursor.getString(3));
             gender.setText(cursor.getString(4));
@@ -217,6 +221,7 @@ public class ProfileActivity extends BaseActivity {
             height.setText(cursor.getString(6));
             symptom.setText(cursor.getString(7));
             careful.setText(cursor.getString(8));
+            pic.setImageBitmap(StringToBitmap(cursor.getString(9)));
         }
         db.close();
     }
@@ -230,7 +235,6 @@ public class ProfileActivity extends BaseActivity {
         Cursor cursor = db.rawQuery("SELECT * FROM tb_pet order by _id asc", null);
         if(cursor != null && cursor.getCount() != 0)
             cursor.moveToNext();
-        //System.out.println("커서아이디"+cursor.getInt(0));
         count = DatabaseUtils.queryNumEntries(db, "tb_pet");//db에 있는 데이터 개수
         //개수만큼 루프를 돌려야함 종류 string을 db에서 받아서 종류대로 버튼 이미지를 세팅해야함
         for(int i=1;i<=count;i++){
@@ -280,5 +284,15 @@ public class ProfileActivity extends BaseActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+    public static Bitmap StringToBitmap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

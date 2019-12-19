@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String petSQL = "create table tb_pet (" +
                 "_id integer primary key autoincrement, " +
                 "name, " + "kind, " + "birthDay, "+ "gender, "+
-                "weight, " + "height, " + "symptom, " + "careful)";
+                "weight, " + "height, " + "symptom, " + "careful, "+"picture)";
         sqLiteDatabase.execSQL(petSQL);
     }
 

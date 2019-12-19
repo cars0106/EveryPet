@@ -30,7 +30,7 @@ public class ToDoActivity extends BaseActivity implements View.OnClickListener {
     private Button button_sign_out;
     private FirebaseAuth firebaseAuth;
     long count;
-    private ListView dataListView = null;
+    private ListView dataListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,38 +98,41 @@ public class ToDoActivity extends BaseActivity implements View.OnClickListener {
                 startActivityForResult(intent,200);
             }
         });
+
+        dataListView = findViewById(R.id.todolist);
     }
 
 //    할일 세팅하는 부분
 //    리스트 보여줘야 되는데
 //    tb_todo에서 date 오름차순으로ㅇㅇㅇ
-    public void setToDoList(int num) {
-        ToDoHelper helper = new ToDoHelper(this);
-        SQLiteDatabase db = helper.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM tb_todo order by date asc", null);
-        long dataCnt = DatabaseUtils.queryNumEntries(db, "tb_todo");//db에 있는 데이터 개수
-        ArrayList<ToDoData> todo = new ArrayList<>();
-
-        for (int i = 0; i < dataCnt; i++) {
-            ToDoData list = new ToDoData();
-            if (num == 0) {
-
-                list.kind=cursor.getString(1);
-                list.time=cursor.getString(3);
-                list.what=cursor.getString(4);
-                list.date=cursor.getString(2);
-
-                todo.add(list);
-            } else {
-                ;
-            }
-        }
-        dataListView = findViewById(R.id.todolist);
-        ListAdapter adapter = new ListAdapter(todo);
-        dataListView.setAdapter(adapter);
-
-    }
+//    public void setToDoList(int num) {
+//        ToDoHelper helper = new ToDoHelper(this);
+//        SQLiteDatabase db = helper.getReadableDatabase();
+//
+//        Cursor cursor = db.rawQuery("SELECT * FROM tb_todo order by date asc", null);
+//        long dataCnt = DatabaseUtils.queryNumEntries(db, "tb_todo");//db에 있는 데이터 개수
+//        ArrayList<ToDoData> todo = new ArrayList<>();
+//
+//        for (int i = 0; i < dataCnt; i++) {
+//            ToDoData list = new ToDoData();
+//            if (num == 0) {
+//0
+//                list.name=cursor.getString(1);
+//                list.kind=cursor.getString(2);
+//                list.date=cursor.getString(3);
+//                list.time=cursor.getString(4);
+//                list.what=cursor.getString(5);
+//                list.isChecked=cursor.getString(6);
+//
+//                todo.add(list);
+//            } else {
+//                ;
+//            }
+//        }
+//
+//        ListAdapter adapter = new ListAdapter(todo);
+//        dataListView.setAdapter(adapter);
+//    }
 
     public void setBtnImg(){
         int btnId;

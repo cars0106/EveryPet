@@ -1,5 +1,6 @@
 package com.everypet.everypet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -8,12 +9,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.everypet.everypet.font.BaseActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.ByteArrayOutputStream;
 
@@ -24,6 +27,39 @@ public class ProfileAdderChooseAnimalActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_adder_choose_animal);
+
+        final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(4).setChecked(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.todo:
+                        Intent todoIntent = new Intent(getApplicationContext(), ToDoActivity.class);
+                        startActivityForResult(todoIntent, 100);
+                        finish();
+                        return true;
+                    case R.id.memo:
+                        Intent memoIntent = new Intent(getApplicationContext(), MemoActivity.class);
+                        startActivityForResult(memoIntent, 100);
+                        finish();
+                        return true;
+                    case R.id.diary:
+                        Intent diaryIntent = new Intent(getApplicationContext(), DiaryActivity.class);
+                        startActivityForResult(diaryIntent, 100);
+                        finish();
+                        return true;
+                    case R.id.community:
+                        Intent communityIntent = new Intent(getApplicationContext(), CommunityActivity.class);
+                        startActivityForResult(communityIntent, 100);
+                        finish();
+                        return true;
+                    case R.id.profile:
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void onClickKind(View v) {
