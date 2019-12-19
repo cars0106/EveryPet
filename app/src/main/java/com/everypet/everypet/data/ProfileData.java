@@ -12,6 +12,6 @@ public class ProfileData extends RealmObject {
     public double profileHeight;
     public String profileSickList;
     public String profileWatchOut;
-    public Uri profileImageUri;
+    public String profileImageUri;
     public String profileType;
 }

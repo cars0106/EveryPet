@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +41,7 @@ public class ProfileAdderWriteActivity extends BaseActivity implements View.OnCl
     EditText watchOutEditText;
 
     ImageView imageView;
-    Uri imageUri;
+    String imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +126,7 @@ public class ProfileAdderWriteActivity extends BaseActivity implements View.OnCl
             if (resultCode == RESULT_OK) {
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    imageUri = data.getData();
+                    imageUri = data.getData().toString();
 
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     inputStream.close();
@@ -189,6 +188,9 @@ public class ProfileAdderWriteActivity extends BaseActivity implements View.OnCl
                 finish();
             }
             else if (weight <= 0) {
+                Toast.makeText(getApplicationContext(), "체중을 입력해주세요!", Toast.LENGTH_LONG).show();
+            }
+            else if (imageUri == null) {
                 Toast.makeText(getApplicationContext(), "체중을 입력해주세요!", Toast.LENGTH_LONG).show();
             }
             else if (height <= 0) {
