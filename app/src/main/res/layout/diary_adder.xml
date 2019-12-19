@@ -27,7 +27,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -36,22 +37,152 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/prf_pic"
+                        android:id="@+id/diary_add_cat"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_weight="0"
                         android:adjustViewBounds="true"
                         android:scaleType="centerInside"
                         android:background="#FFFFFF"
-                        app:srcCompat="@drawable/person" />
+                        app:srcCompat="@drawable/cat" />
 
                     <TextView
-                        android:id="@+id/prf"
+                        android:id="@+id/text_view_diary_add_cat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="0"
-                        android:text="전체" />
+                        android:text="고양이" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/diary_add_dog"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/dog" />
+
+                    <TextView
+                        android:id="@+id/text_view_diary_add_dog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="강아지" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/diary_add_fish"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/fish" />
+
+                    <TextView
+                        android:id="@+id/text_view_diary_add_fish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="물고기" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/diary_add_rabbit"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/rabbit" />
+
+                    <TextView
+                        android:id="@+id/text_view_diary_add_rabbit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="토끼" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/diary_add_rat"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/rat" />
+
+                    <TextView
+                        android:id="@+id/text_view_diary_add_rat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="설치류" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/diary_add_snake"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/snake" />
+
+                    <TextView
+                        android:id="@+id/text_view_diary_add_snake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="파충류" />
 
                 </LinearLayout>
 
@@ -71,6 +202,7 @@
                 android:textSize="20dp"/>
 
             <EditText
+                android:id="@+id/edit_text_diary_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -85,28 +217,25 @@
             android:padding="10dp">
 
             <Button
+                android:id="@+id/button_diary_add_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="사진 추가" />
 
             <ImageView
+                android:id="@+id/image_view_diary_sample"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_gravity="center"/>
 
             <EditText
+                android:id="@+id/edit_text_diary_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="내용을 입력하세요" />
 
         </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="저장하기" />
 
     </LinearLayout>
 
