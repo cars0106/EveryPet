@@ -2,36 +2,59 @@ package com.everypet.everypet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.everypet.everypet.data.RecyclerData;
 import com.everypet.everypet.font.BaseActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.InputStream;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommunityAdderWriteActivity extends BaseActivity implements View.OnClickListener {
     private final int REQUEST_CODE = 0;
 
     ImageView imageView;
+    EditText editText;
+
+    String type;
+
+    Uri uri;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -40,6 +63,7 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
             if (resultCode == RESULT_OK) {
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                    uri = data.getData();
 
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     inputStream.close();
@@ -62,7 +86,7 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
         setContentView(R.layout.community_adder_write);
 
         Intent intent = getIntent();
-        String type = intent.getStringExtra("Type");
+        type = intent.getStringExtra("Type");
         Log.d("CommunityAdderWriteActivity", "타입 : " + type);
 
         ImageView animalTypeImageView = findViewById(R.id.image_view_community_adder_write_animal_type);
@@ -100,7 +124,11 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
         Button addImageButton = findViewById(R.id.button_add_image_community_adder_write);
         addImageButton.setOnClickListener(this);
 
+        Button addCommunityButton = findViewById(R.id.button_add_community_write);
+        addCommunityButton.setOnClickListener(this);
+
         imageView = findViewById(R.id.image_view_community_adder);
+        editText = findViewById(R.id.edit_text_pet_name);
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -182,5 +210,69 @@ public class CommunityAdderWriteActivity extends BaseActivity implements View.On
                 startActivityForResult(imageIntent, REQUEST_CODE);
             }
         }
+        else if (view.getId() == R.id.button_add_community_write) {
+            if (uri != null) {
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setTitle("업로드중...");
+                progressDialog.show();
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference();
+                final StorageReference riverRef = storageRef.child("image/" + uri.getLastPathSegment());
+
+                riverRef.putFile(uri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                riverRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        final Uri downloadUrl = uri;
+                                        Log.d("CommunityAdderWriteActivity", "downloadUri" + downloadUrl);
+
+                                        String petName = editText.getText().toString();
+                                        writeNewPost(petName, type, downloadUrl.toString());
+                                    }
+                                });
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "업로드 완료", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "업로드 실패", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                                double progress = (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
+                            }
+                        });
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "이미지를 선택해주세요!", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void writeNewPost(String petname, String type, String imageurl) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Map<String, Object> childUpdates = new HashMap<>();
+        Map<String, Object> postValues = null;
+
+        String useremail = null;
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        useremail = account.getEmail();
+
+        RecyclerData data = new RecyclerData(petname, type, imageurl, useremail);
+        postValues = data.toMap();
+
+        childUpdates.put("/photo_list/" + petname, postValues);
+        databaseReference.updateChildren(childUpdates);
     }
 }

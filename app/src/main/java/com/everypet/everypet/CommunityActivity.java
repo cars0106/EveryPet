@@ -2,49 +2,76 @@ package com.everypet.everypet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.everypet.everypet.adapter.RecyclerAdapter;
+import com.everypet.everypet.data.RecyclerData;
+import com.everypet.everypet.decoration.RecyclerDecoration;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CommunityActivity extends BaseActivity {
+public class CommunityActivity extends BaseActivity implements View.OnClickListener {
+
+    private ArrayList<RecyclerData> recyclerDataArrayList = new ArrayList<>();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getFirebaseDatabase(null);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community);
 
-        //Recycler View implementation
-        RecyclerView recyclerView = findViewById(R.id.recycler_community);
-        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
+        getFirebaseDatabase(null);
 
-        recyclerView.setLayoutManager(manager);
+        ImageButton picAllImageButton = findViewById(R.id.prf_pic);
+        ImageButton picCatImageButton = findViewById(R.id.cat_pic);
+        ImageButton picDogImageButton = findViewById(R.id.dog_pic);
+        ImageButton picFishImageButton = findViewById(R.id.fish_pic);
+        ImageButton picRabbitImageButton = findViewById(R.id.rabbit_pic);
+        ImageButton picRatImageButton = findViewById(R.id.rat_pic);
+        ImageButton picSnakeImageButton = findViewById(R.id.snake_pic);
 
-        ArrayList<RecyclerInfo> recyclerInfoArrayList = new ArrayList<>();
-        recyclerInfoArrayList.add(new RecyclerInfo("1번", R.drawable.cat));
-        recyclerInfoArrayList.add(new RecyclerInfo("2번", R.drawable.dog));
-        recyclerInfoArrayList.add(new RecyclerInfo("3번", R.drawable.fish));
-        recyclerInfoArrayList.add(new RecyclerInfo("4번", R.drawable.hedgehog));
-        recyclerInfoArrayList.add(new RecyclerInfo("5번", R.drawable.person));
-        recyclerInfoArrayList.add(new RecyclerInfo("6번", R.drawable.rabbit));
-        recyclerInfoArrayList.add(new RecyclerInfo("7번", R.drawable.rat));
-        recyclerInfoArrayList.add(new RecyclerInfo("8번", R.drawable.snake));
+        picAllImageButton.setOnClickListener(this);
+        picCatImageButton.setOnClickListener(this);
+        picDogImageButton.setOnClickListener(this);
+        picFishImageButton.setOnClickListener(this);
+        picRabbitImageButton.setOnClickListener(this);
+        picRatImageButton.setOnClickListener(this);
+        picSnakeImageButton.setOnClickListener(this);
 
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerInfoArrayList);
-        recyclerView.setAdapter(recyclerAdapter);
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout_community);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getFirebaseDatabase(null);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -114,5 +141,124 @@ public class CommunityActivity extends BaseActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.prf_pic) {
+            getFirebaseDatabase(null);
+        }
+        else if (view.getId() == R.id.cat_pic) {
+            getFirebaseDatabase("cat");
+        }
+        else if (view.getId() == R.id.dog_pic) {
+            getFirebaseDatabase("dog");
+        }
+        else if (view.getId() == R.id.fish_pic) {
+            getFirebaseDatabase("fish");
+        }
+        else if (view.getId() == R.id.rabbit_pic) {
+            getFirebaseDatabase("rabbit");
+        }
+        else if (view.getId() == R.id.rat_pic) {
+            getFirebaseDatabase("rat");
+        }
+        else if (view.getId() == R.id.snake_pic) {
+            getFirebaseDatabase("snake");
+        }
+    }
+
+    public static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
+
+        private OnItemClickListener mListener;
+        private GestureDetector mGestureDetector;
+
+        public interface OnItemClickListener {
+            void onItemClick(View view, int position);
+        }
+
+        public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
+            mListener = listener;
+            mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {return true;}
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
+            View clickedChildView = view.findChildViewUnder(e.getX(),e.getY());
+
+            if(clickedChildView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
+                mListener.onItemClick(clickedChildView, view.getChildAdapterPosition(clickedChildView));
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) {}
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
+    }
+
+    public void getFirebaseDatabase(final String toFind) {
+        final ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                recyclerDataArrayList.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    RecyclerData get = snapshot.getValue(RecyclerData.class);
+
+                    if (toFind == null) {
+                    recyclerDataArrayList.add(get);
+                    }
+                    else {
+                        if (get.type.equals(toFind)) {
+                            recyclerDataArrayList.add(get);
+                        }
+                    }
+                }
+
+                for(int i = 0; i < recyclerDataArrayList.size(); i++) {
+                    RecyclerData data = recyclerDataArrayList.get(i);
+
+                    Log.d("CommunityActivity", "result : " + "petname = " + data.petname + "type = " + data.type + "imageurl = " + data.imageurl);
+                }
+
+                final RecyclerView recyclerView = findViewById(R.id.recycler_community);
+                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 3);
+                recyclerView.setLayoutManager(manager);
+
+                RecyclerDecoration recyclerDecoration = new RecyclerDecoration(5);
+                recyclerView.addItemDecoration(recyclerDecoration);
+
+                RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerDataArrayList);
+                recyclerView.setAdapter(recyclerAdapter);
+                recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(CommunityActivity.this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Intent intent = new Intent(getApplicationContext(), CommunityDescriptionActivity.class);
+
+                                RecyclerData tmp = recyclerDataArrayList.get(position);
+                                intent.putExtra("imageurl", tmp.imageurl);
+                                intent.putExtra("useremail", tmp.useremail);
+                                intent.putExtra("petname", tmp.petname);
+
+                                startActivity(intent);
+                            }
+                        })
+                );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("getFirebaseDatabase","loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        Query query = FirebaseDatabase.getInstance().getReference().child("photo_list");
+        query.addListenerForSingleValueEvent(valueEventListener);
     }
 }

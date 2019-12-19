@@ -14,13 +14,34 @@
             android:id="@+id/community_custom_image_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:src="@drawable/hedgehog"/>
 
-        <TextView
-            android:id="@+id/community_text_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PetName" />
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/community_text_view_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="PetName"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/community_text_view_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PetName" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

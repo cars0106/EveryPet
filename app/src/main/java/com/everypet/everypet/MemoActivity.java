@@ -3,6 +3,9 @@ package com.everypet.everypet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,15 +16,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.everypet.everypet.adapter.RecyclerMemoAdapter;
+import com.everypet.everypet.data.MemoData;
+import com.everypet.everypet.decoration.RecyclerDecoration;
 import com.everypet.everypet.font.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 public class MemoActivity extends BaseActivity {
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getMemoFromRealm();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.memo);
+
+        getMemoFromRealm();
+
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout_memo);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getMemoFromRealm();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         // BottomNavigationBar implementation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -91,5 +119,41 @@ public class MemoActivity extends BaseActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    private void getMemoFromRealm() {
+        Realm.init(getApplicationContext());
+        Realm mRealm = Realm.getDefaultInstance();
+        RealmResults<MemoData> realmResults = mRealm.where(MemoData.class).findAll();
+
+        final ArrayList<MemoData> memoDataArrayList = new ArrayList<>();
+        for(int i = 0; i < realmResults.size(); i++) {
+            memoDataArrayList.add(realmResults.get(i));
+        }
+
+        final RecyclerView recyclerView = findViewById(R.id.recycler_memo);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(manager);
+
+        RecyclerDecoration recyclerDecoration = new RecyclerDecoration(10);
+        recyclerView.addItemDecoration(recyclerDecoration);
+
+        if(memoDataArrayList.size() != 0) {
+            RecyclerMemoAdapter recyclerMemoAdapter = new RecyclerMemoAdapter(memoDataArrayList);
+            recyclerView.setAdapter(recyclerMemoAdapter);
+        }
+
+        recyclerView.addOnItemTouchListener(new CommunityActivity.RecyclerItemClickListener(MemoActivity.this, recyclerView, new CommunityActivity.RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getApplicationContext(), MemoDescriptionActivity.class);
+
+                MemoData tmp = memoDataArrayList.get(position);
+                intent.putExtra("title", tmp.memoTitle);
+                intent.putExtra("content", tmp.memoContent);
+
+                startActivity(intent);
+            }
+        }));
     }
 }
