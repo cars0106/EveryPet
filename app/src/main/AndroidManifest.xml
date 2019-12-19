@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.everypet.everypet">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,8 +14,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ProfileDescriptionActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+        <activity
             android:name=".MemoDescriptionActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
         <activity
             android:name=".CommunityDescriptionActivity"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
@@ -51,8 +57,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

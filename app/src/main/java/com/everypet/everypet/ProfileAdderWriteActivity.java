@@ -46,7 +46,6 @@ public class ProfileAdderWriteActivity extends BaseActivity {
     Button addPic;
     ImageView pic;
     Bitmap img;
-    private final int GET_GALLERY_IMAGE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
