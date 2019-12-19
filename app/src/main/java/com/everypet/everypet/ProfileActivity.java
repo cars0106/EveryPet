@@ -54,7 +54,7 @@ public class ProfileActivity extends BaseActivity {
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select name, kind, birthDay, gender, weight, height, symptom, careful from tb_pet order by _id asc", null);
-        if(cursor != null)  count = DatabaseUtils.queryNumEntries(db,"tb_pet");
+        if(cursor != null && cursor.getCount() != 0)  count = DatabaseUtils.queryNumEntries(db,"tb_pet");
         db.close();
 
         int resourceId;
@@ -230,7 +230,7 @@ public class ProfileActivity extends BaseActivity {
         Cursor cursor = db.rawQuery("SELECT * FROM tb_pet order by _id asc", null);
         if(cursor != null && cursor.getCount() != 0)
             cursor.moveToNext();
-        System.out.println("커서아이디"+cursor.getInt(0));
+        //System.out.println("커서아이디"+cursor.getInt(0));
         count = DatabaseUtils.queryNumEntries(db, "tb_pet");//db에 있는 데이터 개수
         //개수만큼 루프를 돌려야함 종류 string을 db에서 받아서 종류대로 버튼 이미지를 세팅해야함
         for(int i=1;i<=count;i++){
@@ -263,6 +263,7 @@ public class ProfileActivity extends BaseActivity {
             ((TextView)findViewById(btnText)).setText(cursor.getString(1));
             cursor.moveToNext();
         }
+        db.close();
     }
 
     @Override
