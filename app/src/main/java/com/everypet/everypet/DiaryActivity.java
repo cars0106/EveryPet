@@ -55,6 +55,12 @@ public class DiaryActivity extends BaseActivity implements View.OnClickListener 
     ProfileData snakeData;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        getDiaryFromRealm(null);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diary);
@@ -264,7 +270,7 @@ public class DiaryActivity extends BaseActivity implements View.OnClickListener 
         recyclerView.addItemDecoration(recyclerDecoration);
 
         if(diaryDataArrayList.size() != 0) {
-            RecyclerDiaryAdapter recyclerDiaryAdapter = new RecyclerDiaryAdapter(diaryDataArrayList);
+            RecyclerDiaryAdapter recyclerDiaryAdapter = new RecyclerDiaryAdapter(diaryDataArrayList, getContentResolver());
             recyclerView.setAdapter(recyclerDiaryAdapter);
         }
     }

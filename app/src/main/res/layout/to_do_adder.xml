@@ -40,37 +40,25 @@
                     android:layout_weight="1"
                     android:text="누가?" />
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/spinner_to_do_who"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:background="#00FFFFFF"
-                    android:text="Button" />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_weight="1"
+                android:text="언제?" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="언제?" />
-
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:background="#00FFFFFF"
-                    android:text="Button" />
-            </LinearLayout>
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="309dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,13 +73,28 @@
                     android:layout_weight="1"
                     android:text="몇시에?" />
 
-                <Button
-                    android:id="@+id/button4"
+                <EditText
+                    android:id="@+id/edit_start_hour"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="hour"
+                    android:ems="10"
+                    android:inputType="time" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:background="#00FFFFFF"
-                    android:text="Button" />
+                    android:text=" : " />
+
+                <EditText
+                    android:id="@+id/edit_start_minute"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="minute"
+                    android:ems="10"
+                    android:inputType="time" />
 
             </LinearLayout>
 
@@ -109,7 +112,7 @@
                     android:text="무엇을?" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/edit_text_to_do_what"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -133,12 +136,12 @@
                     android:layout_weight="1"
                     android:text="알려줄까?" />
 
-                <Switch
-                    android:id="@+id/switch1"
+                <CheckBox
+                    android:id="@+id/to_do_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="위의 시간으로 자동설정 됩니다."
+                    android:text="알람을 설정하시겠습니까?"
                     android:textAlignment="viewEnd" />
 
             </LinearLayout>
@@ -146,11 +149,11 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/upload_toDo"
+            android:id="@+id/button_save_to_do"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="저장하기" />
 
     </LinearLayout>

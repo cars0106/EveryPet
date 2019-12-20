@@ -44,7 +44,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                     android:orientation="vertical">
 
                     <ImageButton
-                        android:id="@+id/prf_pic"
+                        android:id="@+id/image_button_to_do_all"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_weight="0"
@@ -63,7 +64,6 @@
                         app:srcCompat="@drawable/person" />
 
                     <TextView
-                        android:id="@+id/prf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -72,20 +72,191 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/image_button_to_do_cat"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/cat" />
+
+                    <TextView
+                        android:id="@+id/text_view_to_do_cat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="고양이" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/image_button_to_do_dog"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/dog" />
+
+                    <TextView
+                        android:id="@+id/text_view_to_do_dog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="강아지" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/image_button_to_do_fish"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/fish" />
+
+                    <TextView
+                        android:id="@+id/text_view_to_do_fish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="물고기" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/image_button_to_do_rabbit"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/rabbit" />
+
+                    <TextView
+                        android:id="@+id/text_view_to_do_rabbit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="토끼" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/image_button_to_do_rat"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/rat" />
+
+                    <TextView
+                        android:id="@+id/text_view_to_do_rat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="설치류" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/image_button_to_do_snake"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/snake" />
+
+                    <TextView
+                        android:id="@+id/text_view_to_do_snake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0"
+                        android:text="파충류" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </HorizontalScrollView>
 
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/linearLayout_to_do"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_edge_custom_text_view"
+            android:orientation="vertical" >
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/text_view_to_do_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:text="날짜가 들어갈 자리"
+                android:textSize="20dp"
+                android:textColor="@color/colorEverypet" />
 
-        </ScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_to_do"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

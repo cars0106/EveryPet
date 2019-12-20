@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -26,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import io.realm.Realm;
@@ -373,7 +375,17 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
             watchOutTextView.setText(snakeData.profileWatchOut);
 
             Uri imageUri = Uri.parse(snakeData.profileImageUri);
-            imageView.setImageURI(imageUri);
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(imageUri);
+
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                inputStream.close();
+
+                imageView.setImageBitmap(bitmap);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

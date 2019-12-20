@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <com.everypet.everypet.view.SquareImageView
+            android:id="@+id/image_view_to_do"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_to_do"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/text_view_to_do_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="시간이 들어갈 자리" />
+
+        <TextView
+            android:id="@+id/text_view_to_do"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="무엇을 할 지 들어가는 자리"
+            android:textSize="15dp"
+            android:textColor="@color/colorEverypet" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
