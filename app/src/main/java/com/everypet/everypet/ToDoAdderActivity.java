@@ -32,6 +32,7 @@ import java.util.ArrayList;
 public class ToDoAdderActivity extends BaseActivity {
     final Calendar calendar = Calendar.getInstance();
 
+    String kind;
     Button save;
     Spinner who;
     Button date;
@@ -123,12 +124,20 @@ public class ToDoAdderActivity extends BaseActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DBHelper helper = new DBHelper(getApplicationContext());
+                ToDoHelper helper = new ToDoHelper(getApplicationContext());
                 SQLiteDatabase db = helper.getWritableDatabase();
+
+                DBHelper dbHelper = new DBHelper(getApplicationContext());
+                SQLiteDatabase dbh = dbHelper.getReadableDatabase();
+                Cursor dbc = dbh.rawQuery("select kind from tb_pet where name = '"+who.getSelectedItem()+"'",null);
+
+
                 db.execSQL("insert into tb_todo (name, date, time, what, notice) values (?, ?, ?, ?, ?)"
                         , new String[]{who.getSelectedItem().toString(), date.getText().toString(), time.getText().toString(),
                                 what.getText().toString(), String.valueOf(notice.isChecked())});
                 db.close();
+
+                System.out.println("데이터가 추가 되어야함");
 
                 setResult(RESULT_OK);
                 finish();
@@ -136,12 +145,12 @@ public class ToDoAdderActivity extends BaseActivity {
         });
 
         //동물이름 spinner 동적으로 설정하는 부분
-        DBHelper helper = new DBHelper(this);
-        SQLiteDatabase db = helper.getReadableDatabase();
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase dbh = dbHelper.getReadableDatabase();
         ArrayList namelist = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM tb_pet order by _id asc", null);
+        Cursor cursor = dbh.rawQuery("SELECT * FROM tb_pet order by _id asc", null);
         if (cursor != null)
-            count = DatabaseUtils.queryNumEntries(db, "tb_pet");//db에 있는 데이터 개수
+            count = DatabaseUtils.queryNumEntries(dbh, "tb_pet");//db에 있는 데이터 개수
         if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
             for (int i = 0; i < count; i++) {
@@ -149,7 +158,7 @@ public class ToDoAdderActivity extends BaseActivity {
                 cursor.moveToNext();
             }
         }
-        db.close();
+        dbh.close();
 
         spinner = findViewById(R.id.spinner_who);
         arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, namelist);

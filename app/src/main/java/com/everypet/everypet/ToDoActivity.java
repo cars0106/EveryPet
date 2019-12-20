@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ToDoActivity extends BaseActivity implements View.OnClickListener {
 
@@ -31,6 +33,7 @@ public class ToDoActivity extends BaseActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     long count;
     private ListView dataListView;
+    ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,39 +103,44 @@ public class ToDoActivity extends BaseActivity implements View.OnClickListener {
         });
 
         dataListView = findViewById(R.id.todolist);
+        adapter = new ListAdapter(this);
+        setToDoList(0);
+        dataListView.setAdapter(adapter);
+        setListViewHeightBasedOnChildren(dataListView);
     }
 
 //    할일 세팅하는 부분
 //    리스트 보여줘야 되는데
 //    tb_todo에서 date 오름차순으로ㅇㅇㅇ
-//    public void setToDoList(int num) {
-//        ToDoHelper helper = new ToDoHelper(this);
-//        SQLiteDatabase db = helper.getReadableDatabase();
-//
-//        Cursor cursor = db.rawQuery("SELECT * FROM tb_todo order by date asc", null);
-//        long dataCnt = DatabaseUtils.queryNumEntries(db, "tb_todo");//db에 있는 데이터 개수
-//        ArrayList<ToDoData> todo = new ArrayList<>();
-//
-//        for (int i = 0; i < dataCnt; i++) {
-//            ToDoData list = new ToDoData();
-//            if (num == 0) {
-//0
-//                list.name=cursor.getString(1);
-//                list.kind=cursor.getString(2);
-//                list.date=cursor.getString(3);
-//                list.time=cursor.getString(4);
-//                list.what=cursor.getString(5);
-//                list.isChecked=cursor.getString(6);
-//
-//                todo.add(list);
-//            } else {
-//                ;
-//            }
-//        }
-//
-//        ListAdapter adapter = new ListAdapter(todo);
-//        dataListView.setAdapter(adapter);
-//    }
+    public void setToDoList(int num) {
+        ToDoHelper helper = new ToDoHelper(this);
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM tb_todo order by date asc", null);
+        cursor.moveToNext();
+        long dataCnt = DatabaseUtils.queryNumEntries(db, "tb_todo");//db에 있는 데이터 개수
+        System.out.println("할일 데이터 개수: "+dataCnt);
+        ArrayList<ToDoData> todo = new ArrayList<>();
+
+        for (int i = 0; i < dataCnt; i++) {
+            ToDoData list = new ToDoData();
+            if (num == 0) {
+
+                list.name=cursor.getString(1);
+                list.kind=cursor.getString(2);
+                list.date=cursor.getString(3);
+                list.time=cursor.getString(4);
+                list.what=cursor.getString(5);
+                list.isChecked=cursor.getString(6);
+
+                todo.add(list);
+            } else {
+                ;
+            }
+            cursor.moveToNext();
+        }
+        adapter.setData(todo);
+    }
 
     public void setBtnImg(){
         int btnId;
@@ -191,6 +199,7 @@ public class ToDoActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onRestart() {
         setBtnImg();
+        setToDoList(0);
         super.onRestart();
     }
 
@@ -221,5 +230,29 @@ public class ToDoActivity extends BaseActivity implements View.OnClickListener {
         if(view.getId() == R.id.btn_googleSignOut) {
             signOut();
         }
+    }
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = (ListAdapter) listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            //listItem.measure(0, 0);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
+
+        listView.requestLayout();
     }
 }
